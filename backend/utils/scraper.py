@@ -2,10 +2,15 @@ from bs4 import BeautifulSoup
 import requests
 import os
 import sys
+import json
+import time
 
 from country_extractor import extract_country
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from db.mongo import insert_document, if_index_exists
+from model.claudeAI import call_anthropic_model
+from utils.json_parser import extract_clean_json
+from constants.prompts import llm_interface, scraped_data_parser
 
 selected_countries = ['India', 'USA', 'Singapore', 'UAE - United Arab Emirates']
 base_url = "https://www.eventseye.com"
@@ -19,7 +24,6 @@ def scrape_exhibitions():
     a_tags = body_div[2].find_all('a') if body_div else []
 
     ict_href = a_tags[22].get('href') if len(a_tags) > 22 else None
-    print("ICT HREF =>", ict_href)
 
     # -------------------- Fetch exhibitions list --------------------
     ict_url = f"{base_url}/fairs/{ict_href}"
@@ -67,6 +71,7 @@ def scrape_exhibitions():
 
             # -------------------- Description --------------------
             description_el = soup.find('div', class_='description')
+            description_el.h2.decompose() if description_el else None
             description = description_el.get_text(strip=True) if description_el else None
 
             # -------------------- Related Industries --------------------
@@ -78,10 +83,12 @@ def scrape_exhibitions():
 
             # -------------------- Audience --------------------
             audience_el = soup.find('div', class_='audience')
+            audience_el.h2.decompose() if audience_el else None
             audience = audience_el.get_text(strip=True) if audience_el else None
 
             # -------------------- Cycle --------------------
             cycle_el = soup.find('div', class_='cycle')
+            cycle_el.h2.decompose() if cycle_el else None
             cycle = cycle_el.get_text(strip=True) if cycle_el else None
 
             # -------------------- Date, City, Venue --------------------
@@ -147,6 +154,11 @@ def scrape_exhibitions():
                     "official_website": organizer_website
                 })
 
+            event_details = soup.find('div', class_ = 'more-info')
+            event_website_el = event_details.find_all('a') if event_details else None
+            event_website = event_website_el[0].get('href') if event_website_el else None
+            event_email = event_website_el[1].get('href') if event_website_el else None
+
             # -------------------- Prepare payload --------------------
             payload = {
                 "exhibition_url": exhibition_href,
@@ -161,12 +173,28 @@ def scrape_exhibitions():
                 "venue_website": venue_website,
                 "venue_phone": venue_phone,
                 "venue_fax": venue_fax,
+                "event_website": event_website,
+                "event_email": event_email,
                 "organizers": organizers
             }
 
-            # -------------------- Insert into MongoDB --------------------
-            inserted_id = insert_document(payload)
-            print("Inserted:", inserted_id)
+            stringified_paylod = json.dumps(payload)
+            # ------------------- Parsing scraped event data ---------------
+            prompt = f"{stringified_paylod} \n {scraped_data_parser} Strictly respond in JSON format, Don't include tags like <cite index=''>"
 
+            final_payload = call_anthropic_model(prompt)
+            parsed_final_payload = extract_clean_json(final_payload)
+
+            # ------------------- LLM call for AI insights -----------------
+            prompt = f"The event details is provided below \n {parsed_final_payload} \n based on this event details you are supposed to find other details provided in the given interface \n {llm_interface} Strictly provide JSON format. Don't include tags like <cite index=''>, if valued not found put null"
+
+            time.sleep(15)
+            raw_claude_response = call_anthropic_model(prompt, use_web_search=True)
+            parsed_claude_response = extract_clean_json(raw_claude_response)
+            parsed_final_payload['llm_response'] = parsed_claude_response
+
+            # -------------------- Insert into MongoDB --------------------
+            inserted_id = insert_document(parsed_final_payload)
+            print("Inserted:", inserted_id)
 
 scrape_exhibitions()

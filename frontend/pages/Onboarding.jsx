@@ -1,7 +1,7 @@
-import React from 'react'
 import Navbar from '../components/Navbar'
 
 const Onboarding = () => {
+  
   return (
     <div>
         <Navbar/>

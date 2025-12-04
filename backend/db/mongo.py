@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 from typing import Dict
 from datetime import datetime
+from bson.objectid import ObjectId
 load_dotenv()
 
 connection = MongoClient(os.getenv("MONGO_URI"))
@@ -20,7 +21,7 @@ def get_documents():
     docs = list(collection.find({}))
     for d in docs:
         d["_id"] = str(d["_id"])
-    print(docs)
+    # print(docs)
     return docs
 
 def insert_document(doc: Dict):
@@ -38,5 +39,13 @@ def delete_all_document():
     except Exception as e:
         print(f"deletion failed: {str(e)}")
 
-
-get_documents()
+def get_document_by_id(id: str):
+    try:
+        document = collection.find_one({"_id":ObjectId(id)})
+        if document:
+            document["_id"] = str(document["_id"])
+            return document
+        else:
+            return None
+    except Exception as e:
+        print(f"Failed to get document by id: {str(e)}")

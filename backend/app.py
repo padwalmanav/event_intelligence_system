@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from db.mongo import get_documents
+from db.mongo import get_documents, get_document_by_id
 
 app = FastAPI()
 
@@ -23,3 +23,15 @@ def fetch_events():
     return {
         "events": exhibitions
     }
+
+@app.get('/events/{id}')
+def fetch_event_by_id(id: str):
+    exhibition = get_document_by_id(id)
+    if exhibition:
+        return {
+            "event": exhibition
+        }
+    else:
+        return {
+            "event": "No event found"
+        }

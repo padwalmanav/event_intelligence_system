@@ -6,3 +6,8 @@ pymongo
 pydantic
 fastapi
 uvicorn
+google-genai
+groq
+tavily
+anthropic
+langchain_anthropic 
