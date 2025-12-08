@@ -17,3 +17,12 @@ class insert_document_schema(BaseModel):
     venue_fax: str
     organizers: List[dict]
     last_scrapped_at: datetime
+
+class create_user_schema(BaseModel):
+    first_name: str
+    last_name: str
+    email_phone: str
+    password: str
+    profession: str
+    location: str
+    interests: List[str]

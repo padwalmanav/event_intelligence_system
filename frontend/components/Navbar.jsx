@@ -2,13 +2,15 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') || true;
+
   return (
     <nav className="backdrop-blur-md bg-[#0b1120]/80 border-b border-white/5 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* Brand */}
-        <h1 className="text-2xl font-bold tracking-tight text-blue-400">
-          Events IQ
+        <h1 className='text-3xl text-white text-3xl'>
+          <span className='text-xl text-white'>my</span>Events<span className="text-xl font-bold tracking-tight text-blue-400">IQ</span>
         </h1>
 
         {/* Links */}
@@ -39,6 +41,10 @@ const Navbar = () => {
           >
             Events
           </NavLink>
+
+          {
+            isLoggedIn ? <button>Logout</button> : <button>Login</button>
+          }
 
         </div>
 

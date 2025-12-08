@@ -26,7 +26,7 @@ const EventSlider = ({ events }) => {
           onClick={() => sliderRef.current.scrollBy({ left: -scrollByAmount, behavior: "smooth" })}
           className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 rounded-full z-20 hover:bg-blue-50"
         >
-          <ChevronLeft size={24} />
+          <ChevronLeft size={24} color="#2563eb"/>
         </button>
       )}
 
@@ -47,7 +47,7 @@ const EventSlider = ({ events }) => {
           onClick={() => sliderRef.current.scrollBy({ left: scrollByAmount, behavior: "smooth" })}
           className="absolute right-0 top-1/2 -translate-y-1/2 bg-white shadow-lg p-2 rounded-full z-20 hover:bg-blue-50"
         >
-          <ChevronRight size={24} />
+          <ChevronRight size={24} color="#2563eb"/>
         </button>
       )}
     </div>

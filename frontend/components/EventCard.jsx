@@ -71,7 +71,7 @@ const EventCard = ({ event }) => {
 
         {/* PARTICIPANTS */}
         <div className="flex items-center gap-2 text-gray-300 text-sm mb-3">
-          <Briefcase size={14} /> {event.llm_response?.target_audience.slice(0,35) || "N/A"}
+          <Briefcase size={14} /> {event.llm_response?.target_audience[0].slice(0,30) || "N/A"} ...
         </div>
 
         {/* Participant tags */}
