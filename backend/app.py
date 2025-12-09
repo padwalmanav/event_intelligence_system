@@ -16,7 +16,7 @@ app.add_middleware(
 
 @app.get('/test')
 def test_api():
-    return {"message":"Hello world!"}
+    return {"message":"Hello"}
 
 @app.get('/events')
 def fetch_events():
