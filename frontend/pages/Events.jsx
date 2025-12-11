@@ -11,7 +11,7 @@ const Events = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/events");
+        const res = await axios.get("https://event-intelligence-system-3.onrender.com/events");
         setEvents(res.data.events);
       } catch (err) {
         console.error("Failed to load events:", err);

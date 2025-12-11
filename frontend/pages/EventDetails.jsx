@@ -10,7 +10,7 @@ const EventDetails = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/events/${id}`);
+        const res = await axios.get(`https://event-intelligence-system-3.onrender.com/events/${id}`);
         setEvent(res.data.event);
       } catch (err) {
         console.error("Error fetching event:", err);
