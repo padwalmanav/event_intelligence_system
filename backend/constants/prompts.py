@@ -29,3 +29,103 @@ llm_interface = """
   "industry_impact": "low | medium | high",
 }
 """
+
+event_interface = """
+{
+  "title": "",
+  "domains": [],
+  "date": "",
+  "location": "",
+  "eventCenter": "",
+  "registeredUsersCount": "",
+  "overview": {
+    "about": "",
+    "learnings": [],
+    "shouldAttend": [],
+    "highlights": {
+      "attendees": "",
+      "sessions": "",
+      "exhibitors": "",
+      "speakers": "",
+      "networking": "",
+      "workshops": ""
+    },
+    "organizer": ""
+  },
+  "speakers": [
+    {
+      "name": "",
+      "designation": "",
+      "day": ""
+    },
+    {
+      "name": "",
+      "designation": "",
+      "day": "",
+      "time": ""
+    },
+    ....
+  ],
+  "agenda": [
+    {
+      "day": "",
+      "type": "",
+      "events": [
+        {
+          "time": "",
+          "event": ""
+        },
+        {
+          "time": "",
+          "event": ""
+        },
+        {
+          "time": "",
+          "event": ""
+        }
+      ]
+    },
+    {
+      "day": "",
+      "type": "",
+      "events": [
+        {
+          "time": "",
+          "event": ""
+        },
+        {
+          "time": "",
+          "event": ""
+        },
+        {
+          "time": "",
+          "event": ""
+        }
+      ]
+    },
+    ....
+  ],
+  "network": {
+    "attendeeProfiles": {
+      "seniorLevel": "",
+      "seniorLevelDescription": "",
+      "buyingInfluence": "",
+      "buyingInfluenceDescription": ""
+    }
+  },
+  "insights": {
+    "roleDistribution": [
+      {
+        "role": "",
+        "percentage": ""
+      },
+      {
+        "role": "",
+        "percentage": ""
+      },
+      ....
+    ],
+    "topCompanies": []
+  }
+}
+"""
