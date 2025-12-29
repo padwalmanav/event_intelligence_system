@@ -9,7 +9,6 @@ load_dotenv()
 connection = MongoClient(os.getenv("MONGO_URI"))
 
 db = connection['intelligence_event_system']
-db['events'].create_index("exhibition_url", unique=True)
 
 def if_index_exists(exhibition_url):
     if db['events'].find_one({"exhibition_url": exhibition_url}):

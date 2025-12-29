@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import backend_url from "../constants/backend_url"
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const EventDetails = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await axios.get(`https://event-intelligence-system-3.onrender.com/events/${id}`);
+        const res = await axios.get(`${backend_url}/events/${id}`);
         setEvent(res.data.event);
       } catch (err) {
         console.error("Error fetching event:", err);
@@ -27,6 +28,7 @@ const EventDetails = () => {
     { id: "agenda", label: "Agenda" },
     { id: "network", label: "Network" },
     { id: "insights", label: "Insights" },
+    { id: "gtm", label: "GTM Intelligence" }
   ];
 
   return (
@@ -79,11 +81,10 @@ const EventDetails = () => {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`py-4 px-2 text-sm font-medium transition-all relative ${
-                      activeTab === tab.id
+                    className={`py-4 px-2 text-sm font-medium transition-all relative ${activeTab === tab.id
                         ? "text-blue-400"
                         : "text-gray-400 hover:text-gray-200"
-                    }`}
+                      }`}
                   >
                     {tab.label}
                     {activeTab === tab.id && (
@@ -97,13 +98,13 @@ const EventDetails = () => {
 
           {/* CONTENT AREA */}
           <div className="max-w-7xl mx-auto px-6 py-10">
-            
+
             {/* OVERVIEW TAB */}
             {activeTab === "overview" && (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* LEFT COLUMN - Main Content */}
                 <div className="lg:col-span-2 space-y-8">
-                  
+
                   {/* ABOUT EVENT */}
                   <Card title="About This Event">
                     <p className="text-gray-300 leading-relaxed">{event.overview?.about}</p>
@@ -143,7 +144,7 @@ const EventDetails = () => {
 
                 {/* RIGHT COLUMN - Sidebar */}
                 <div className="space-y-6">
-                  
+
                   {/* REGISTRATION STATUS */}
                   <Card title="Registration Status">
                     <div className="space-y-4">
@@ -156,14 +157,14 @@ const EventDetails = () => {
                         </div>
                         {event.overview?.highlights?.attendees && (
                           <div className="w-full bg-gray-700 rounded-full h-2">
-                            <div 
-                              className="bg-blue-500 h-2 rounded-full" 
+                            <div
+                              className="bg-blue-500 h-2 rounded-full"
                               style={{ width: "70%" }}
                             ></div>
                           </div>
                         )}
                       </div>
-                      
+
                       {event.overview?.highlights?.attendees && (
                         <p className="text-gray-400 text-sm">
                           Expected: {event.overview.highlights.attendees} attendees
@@ -266,7 +267,7 @@ const EventDetails = () => {
                             {day.events?.length || 0} Events
                           </span>
                         </div>
-                        
+
                         <div className="p-5 space-y-4">
                           {day.events?.map((evt, j) => (
                             <div key={j} className="flex gap-4 p-4 bg-[#0d1117] rounded-lg hover:bg-[#161b22] transition-all">
@@ -306,7 +307,7 @@ const EventDetails = () => {
                               {event.network.attendeeProfiles.seniorLevelDescription}
                             </p>
                           </div>
-                          
+
                           <div className="p-5 bg-[#0d1117] rounded-xl border border-gray-700">
                             <div className="flex items-baseline gap-2 mb-2">
                               <span className="text-5xl font-bold text-blue-400">
@@ -332,7 +333,7 @@ const EventDetails = () => {
               <div>
                 {event.insights ? (
                   <div className="space-y-8">
-                    
+
                     {/* ROLE DISTRIBUTION */}
                     {event.insights.roleDistribution && (
                       <Card title="Role Distribution">
@@ -345,8 +346,8 @@ const EventDetails = () => {
                                   <span className="text-blue-400 font-semibold text-sm">{role.percentage}</span>
                                 </div>
                                 <div className="w-full bg-gray-700 rounded-full h-2">
-                                  <div 
-                                    className="bg-blue-500 h-2 rounded-full transition-all" 
+                                  <div
+                                    className="bg-blue-500 h-2 rounded-full transition-all"
                                     style={{ width: role.percentage }}
                                   ></div>
                                 </div>
@@ -381,6 +382,107 @@ const EventDetails = () => {
                 )}
               </div>
             )}
+
+            {/* GTM INTELLIGENCE TAB */}
+            {activeTab === "gtm" && (
+              <div>
+                {event.gtm_intelligence ? (
+                  <div className="space-y-8">
+
+                    {/* IDEAL PERSONAS */}
+                    {event.gtm_intelligence.ideal_personas && (
+                      <Card title="Ideal Target Personas">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                          {event.gtm_intelligence.ideal_personas.map((persona, i) => (
+                            <span
+                              key={i}
+                              className="px-3 py-2 bg-blue-500/10 text-blue-300 rounded-lg text-sm border border-blue-500/20 text-center"
+                            >
+                              {persona}
+                            </span>
+                          ))}
+                        </div>
+                      </Card>
+                    )}
+
+                    {/* WHY ATTEND */}
+                    {event.gtm_intelligence.why_attend && (
+                      <Card title="Why Attend This Event">
+                        <p className="text-gray-300 leading-relaxed">
+                          {event.gtm_intelligence.why_attend}
+                        </p>
+                      </Card>
+                    )}
+
+                    {/* BEST FIT COMPANIES */}
+                    {event.gtm_intelligence.best_fit_companies && (
+                      <Card title="Best Fit Companies">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                          {/* INDUSTRIES */}
+                          <div>
+                            <h4 className="text-white font-semibold mb-3">Industries</h4>
+                            <ul className="space-y-2">
+                              {event.gtm_intelligence.best_fit_companies.industries.map((item, i) => (
+                                <li key={i} className="text-gray-300 text-sm flex gap-2">
+                                  <span className="text-blue-400">•</span>
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* COMPANY SIZE */}
+                          <div>
+                            <h4 className="text-white font-semibold mb-3">Company Size</h4>
+                            <ul className="space-y-2">
+                              {event.gtm_intelligence.best_fit_companies.company_size.map((item, i) => (
+                                <li key={i} className="text-gray-300 text-sm flex gap-2">
+                                  <span className="text-blue-400">•</span>
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* BUSINESS MODELS */}
+                          <div>
+                            <h4 className="text-white font-semibold mb-3">Business Models</h4>
+                            <ul className="space-y-2">
+                              {event.gtm_intelligence.best_fit_companies.business_models.map((item, i) => (
+                                <li key={i} className="text-gray-300 text-sm flex gap-2">
+                                  <span className="text-blue-400">•</span>
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                        </div>
+                      </Card>
+                    )}
+
+                    {/* REASONS TO SKIP */}
+                    {event.gtm_intelligence.reasons_to_skip && (
+                      <Card title="Reasons This Event May Not Be a Fit">
+                        <ul className="space-y-3">
+                          {event.gtm_intelligence.reasons_to_skip.map((reason, i) => (
+                            <li key={i} className="flex items-start gap-3 text-gray-300">
+                              <span className="text-red-400 mt-1">⚠</span>
+                              <span>{reason}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </Card>
+                    )}
+
+                  </div>
+                ) : (
+                  <EmptyState message="No GTM intelligence available" />
+                )}
+              </div>
+            )}
+
 
           </div>
         </div>

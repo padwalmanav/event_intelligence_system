@@ -22,7 +22,14 @@ def call_anthropic_model(prompt: str, use_web_search: bool = False, retries: int
         "model": "claude-haiku-4-5-20251001",
         "max_tokens": 5000,
         "system": (
-            "You are a helpful agent that performs web search when needed. "
+            "You are a helpful agent that performs web search when needed."
+            """You must:
+                - Be concise
+                - Be factual (do not invent data)
+                - Clearly state assumptions
+                - Think like a CMO / Head of Sales / Partnerships lead 
+            """
+            "If information is missing, say 'Insufficient data'. Do not hallucinate speakers, sponsors, or attendees."
             "Always return valid JSON with no additional text."
         ),
         "messages": [

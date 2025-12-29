@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast'
 import EventDetails from '../pages/EventDetails'
 import "../styles.css"
 import Signup from '../pages/Signup'
+import About from '../pages/About'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     element:<Signup/>,
     path:'/signup'
+  },
+  {
+    element:<About/>,
+    path:'/about'
   }
 ])
 

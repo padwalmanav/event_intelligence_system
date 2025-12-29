@@ -126,6 +126,16 @@ event_interface = """
       ....
     ],
     "topCompanies": []
+  },
+  "gtm_intelligence":{
+    "ideal_personas": [],      // who should attend (Job roles, Seniority, Functions)
+    "why_attend": "",          // Business Oportunities, Strategic value
+    "best_fit_companies": {     
+      "industries": [],
+      "company_size": [],
+      "business_models": []       // (SaaS, Enterprise, Services, etc)
+    },
+    "reasons_to_skip": []         // top 3 reasons NOT to attend this event
   }
 }
 """

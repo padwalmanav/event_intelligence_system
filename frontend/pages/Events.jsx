@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import EventSlider from "../components/EventSlider";
+import backend_url from "../constants/backend_url";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get("https://event-intelligence-system-3.onrender.com/events");
+        const res = await axios.get(`${backend_url}/events`);
         setEvents(res.data.events);
       } catch (err) {
         console.error("Failed to load events:", err);
