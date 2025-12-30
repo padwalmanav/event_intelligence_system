@@ -2,14 +2,13 @@ from constants.prompts import event_interface
 from model.claudeAI import call_anthropic_model
 from utils.json_parser import extract_clean_json
 from db.mongo import insert_document
-
+# CES 2026, SaaS conference 2026, AI impact Summit 2026, 4th Information Technology Conference 2026, FOSDEM 2026, SaaS Insider Event India
 def event_search_from_web():
     prompt = f"""
         You are an AI data extraction agent.
 
         TASK:
-        Fetch up to 5 upcoming technology industry events happening in 2026.
-        CES 2026, SaaS conference 2026, AI impact Summit 2026, 4th Information Technology Conference 2026, FOSDEM 2026, SaaS Insider Event India.
+        Fetch up FOSDEM 2026 event happening in 2026.
 
         OUTPUT RULES (MANDATORY):
         - Respond with ONLY a valid JSON array

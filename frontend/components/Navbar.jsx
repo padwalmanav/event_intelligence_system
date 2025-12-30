@@ -9,7 +9,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* Brand */}
-        <NavLink to="/events">
+        <NavLink to="/">
           <h1 className='text-3xl text-white text-3xl'>
             <span className='text-xl text-white'>my</span>Events<span className="text-xl font-bold tracking-tight text-blue-400">IQ</span>
           </h1>
