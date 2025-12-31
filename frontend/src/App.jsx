@@ -6,6 +6,7 @@ import EventDetails from '../pages/EventDetails'
 import "../styles.css"
 import Signup from '../pages/Signup'
 import About from '../pages/About'
+import Login from '../pages/Login'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     element:<Signup/>,
     path:'/signup'
+  },
+  {
+    element:<Login/>,
+    path:'/login'
   },
   {
     element:<About/>,

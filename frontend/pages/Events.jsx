@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchEvent, setSearchEvent] = useState(null);
+  const [filteredEvents, setFilteredEvents] = useState(null);
 
   useEffect(() => {
   let toastId;
@@ -31,10 +33,16 @@ const Events = () => {
   fetchEvents();
 }, []);
 
+  useEffect(()=>{
+    const filtered = events.filter((event)=>{
+      return(event.title.toLowerCase().includes(searchEvent.toLowerCase()))
+    })
+    setFilteredEvents(filtered)
+},[searchEvent]);
 
   return (
     <div className="min-h-screen bg-[#020617] text-white">
-      <Navbar />
+      <Navbar search={true} searchEvent={setSearchEvent}/>
 
       {/* PAGE CONTAINER */}
       <div className="max-w-7xl mx-auto px-4 py-10">
@@ -61,9 +69,13 @@ const Events = () => {
               Fetching events...
             </div>
           ):
-            events.length > 0 ? (
-              <EventSlider events={events} />
-              ) : (
+            filteredEvents.length > 0 ? (
+              <EventSlider events={filteredEvents} />
+              ) : 
+                events.length > 0 ? (
+                  <EventSlider events={events} />
+                ):
+                 (
                 <div className="bg-[#0f172a] rounded-xl h-80 mt-10 pt-16 flex flex-col items-center">
                   <h1 className="text-gray-300 text-3xl font-semibold">
                     --- No events to display ---
