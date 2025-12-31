@@ -500,13 +500,6 @@ const Card = ({ title, children }) => (
   </div>
 );
 
-// const Stat = ({ label, value }) => (
-//   <div className="flex justify-between items-center py-2 border-b border-gray-700 last:border-0">
-//     <span className="text-gray-400 text-sm">{label}</span>
-//     <span className="text-white font-semibold">{value}</span>
-//   </div>
-// );
-
 const Stat = ({ label, value }) => {
   return (
     <div className="flex items-start gap-6 border-b border-white/10 pb-3">
