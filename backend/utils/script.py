@@ -2,13 +2,55 @@ from constants.prompts import event_interface
 from model.claudeAI import call_anthropic_model
 from utils.json_parser import extract_clean_json
 from db.mongo import insert_document
-# CES 2026, SaaS conference 2026, AI impact Summit 2026, 4th Information Technology Conference 2026, FOSDEM 2026, SaaS Insider Event India
-def event_search_from_web():
+
+events = [
+    "Global Supply Chain Summit",
+    "MicroConf US 2026",
+    "Sustainable Business Forum",
+    "SaaStock USA 2026",
+    "GITEX Asia 2026",
+    "FinTech World Forum",
+    "Energy Tech Summit Europe 2026",
+    "India Electronics Week 2026",
+    "Retail Innovation Expo 2026",
+    "SaaStr Annual 2026",
+    "EmTech Europe 2026",
+    "TechEx North America 2026",
+    "Healthcare Innovation Congress",
+    "Manufacturing 4.0 Conference",
+    "Digital Transformation Summit India 2026",
+    "ACM SIGMOD / PODS 2026",
+    "InsurTech Connect",
+    "EXPO REAL Asia Pacific 2026",
+    "Business of Software Europe 2026",
+    "Medical Devices Summit",
+    "KubeCon + CloudNativeCon India 2026",
+    "Clean Energy Summit",
+    "Creative Tech Europe 2026",
+    "TechSummit 2026",
+    "BioTech & Pharma World",
+    "Asia Pacific Regional Conference 2026",
+    "LEAP 2026",
+    "OMR Festival 2026",
+    "Future of Retail Summit",
+    "Web Summit 2026",
+    "Hydrogen Energy Forum",
+    "Digital Banking Forum",
+    "ISE 2026 (Integrated Systems Europe)",
+    "Smart Factory Expo",
+    "Collision 2026",
+    "Business of Software USA 2026",
+    "AWS re:Invent 2026",
+    "Dreamforce 2026",
+    "Tech Innovation Forum 2026 (APAC)",
+]
+
+def event_search_from_web(event: str):
     prompt = f"""
         You are an AI data extraction agent.
 
         TASK:
-        Fetch up FOSDEM 2026 event happening in 2026.
+        Fetch up {event} event happening in 2026.
 
         OUTPUT RULES (MANDATORY):
         - Respond with ONLY a valid JSON array
@@ -69,5 +111,5 @@ def event_search_from_web():
     print("---- Event Search from web over ----")
 
 
-if __name__ == "__main__":
-    event_search_from_web()
+for event in events:
+    event_search_from_web(event)

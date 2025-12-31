@@ -29,7 +29,7 @@ def call_anthropic_model(prompt: str, use_web_search: bool = False, retries: int
                 - Clearly state assumptions
                 - Think like a CMO / Head of Sales / Partnerships lead 
             """
-            "If information is missing, say 'Insufficient data'. Do not hallucinate speakers, sponsors, or attendees."
+            "Do not hallucinate speakers, sponsors, or attendees."
             "Always return valid JSON with no additional text."
         ),
         "messages": [

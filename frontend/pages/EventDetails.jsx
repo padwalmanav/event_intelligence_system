@@ -500,12 +500,28 @@ const Card = ({ title, children }) => (
   </div>
 );
 
-const Stat = ({ label, value }) => (
-  <div className="flex justify-between items-center py-2 border-b border-gray-700 last:border-0">
-    <span className="text-gray-400 text-sm">{label}</span>
-    <span className="text-white font-semibold">{value}</span>
-  </div>
-);
+// const Stat = ({ label, value }) => (
+//   <div className="flex justify-between items-center py-2 border-b border-gray-700 last:border-0">
+//     <span className="text-gray-400 text-sm">{label}</span>
+//     <span className="text-white font-semibold">{value}</span>
+//   </div>
+// );
+
+const Stat = ({ label, value }) => {
+  return (
+    <div className="flex items-start gap-6 border-b border-white/10 pb-3">
+      {/* Label */}
+      <div className="w-32 text-sm text-gray-400 shrink-0">
+        {label}
+      </div>
+
+      {/* Value */}
+      <div className="text-sm text-white font-medium leading-relaxed">
+        {value}
+      </div>
+    </div>
+  );
+};
 
 const EmptyState = ({ message }) => (
   <div className="flex flex-col items-center justify-center py-16">
