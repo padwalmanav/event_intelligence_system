@@ -47,9 +47,35 @@ def get_document_by_id(id: str):
     except Exception as e:
         print(f"Failed to get document by id: {str(e)}")
 
+# ---------------- User collection ----------------
 def create_new_user(user: dict):
     try:
         new_user = db['users'].insert_one(user)
         return str(new_user.inserted_id)
     except Exception as e:
         return f"failed to insert user {str(e)}"
+
+def get_all_users() -> dict:
+    try:
+        users = db['users'].find({})
+        for user in users:
+            user['_id'] = str(user['_id'])
+        
+        return {
+            "data":users
+        }
+    except Exception as e:
+        print(f"failed to get users from db, {str(e)}")
+        return {"error":"failed to get users from db"}
+
+def get_user_by_id(id: str) -> dict:
+    try:
+        user = db['users'].find_one({"id":id})
+        user['_id'] = str(user['_id'])
+        
+        return {
+            "data":user
+        }
+    except Exception as e:
+        print(f"Failed to get user by id from db, {str(e)}")
+        return {"error":"Failed to get user by id from db"}

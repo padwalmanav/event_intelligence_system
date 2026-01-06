@@ -139,3 +139,173 @@ event_interface = """
   }
 }
 """
+
+event_interface_2 = """
+{
+  "title": "",
+  "domains": [],
+  "date": "",
+  "location": "",
+  "eventCenter": "",
+  "registeredUsersCount": "",
+
+  "overview": {
+    "about": "",
+    "learnings": [],
+    "shouldAttend": [],
+    "highlights": {
+      "attendees": "",
+      "sessions": "",
+      "exhibitors": "",
+      "speakers": "",
+      "networking": "",
+      "workshops": ""
+    },
+    "organizer": ""
+  },
+
+  "speakers": [
+    {
+      "name": "",
+      "designation": "",
+      "day": "",
+      "time": ""
+    }
+  ],
+
+  "agenda": [
+    {
+      "day": "",
+      "type": "",
+      "events": [
+        {
+          "time": "",
+          "event": ""
+        }
+      ]
+    }
+  ],
+  "network": {
+    "attendeeProfiles": {
+      "seniorLevel": "",
+      "seniorLevelDescription": "",
+      "buyingInfluence": "",
+      "buyingInfluenceDescription": ""
+    },
+
+    "officialNetworkingEvents": [
+      {
+        "name": "",
+        "description": ""
+      }
+    ],
+
+    "vendorPartnerParties": {
+      "availability": "",
+      "notes": ""
+    },
+
+    "meetingOpportunities": {
+      "tools": [],
+      "preEventOutreach": "",
+      "onSiteMeetings": ""
+    },
+
+    "networkingValueSummary": ""
+  },
+  "roi_indicators": {
+    "leadGenerationBenchmarks": [
+      {
+        "metric": "",
+        "range": ""
+      }
+    ],
+
+    "conversionMetrics": {
+      "leadToMeeting": "",
+      "meetingToOpportunity": "",
+      "averageDealSize": ""
+    },
+
+    "roiCalculationFramework": {
+      "formula": "",
+      "exampleSummary": ""
+    },
+
+    "overallRoiScore": ""
+  },
+  "event_cost_analysis": {
+    "registrationPricing": [
+      {
+        "ticketType": "",
+        "price": "",
+        "deadline": ""
+      }
+    ],
+
+    "attendeeBudgetEstimate": {
+      "registration": "",
+      "travel": "",
+      "accommodation": "",
+      "mealsAndMisc": "",
+      "totalEstimatedCost": ""
+    }
+  },
+  "logistics_planning": {
+    "keyDeadlines": [
+      {
+        "milestone": "",
+        "date": ""
+      }
+    ],
+
+    "venueDetails": {
+      "venueName": "",
+      "city": "",
+      "transportationNotes": ""
+    },
+
+    "accommodationRecommendations": [],
+
+    "visaRequirements": {
+      "required": "",
+      "notes": ""
+    },
+
+    "proTips": []
+  },
+  "strategic_fit_assessment": {
+    "idealFor": [],
+    "notRecommendedFor": [],
+
+    "objectivesBestServed": [
+      {
+        "objective": "",
+        "score": ""
+      }
+    ],
+
+    "finalRecommendation": ""
+  },
+  "insights": {
+    "roleDistribution": [
+      {
+        "role": "",
+        "percentage": ""
+      }
+    ],
+    "topCompanies": []
+  },
+
+  "gtm_intelligence": {
+    "ideal_personas": [],
+    "why_attend": "",
+    "best_fit_companies": {
+      "industries": [],
+      "company_size": [],
+      "business_models": []
+    },
+    "reasons_to_skip": []
+  }
+}
+"""

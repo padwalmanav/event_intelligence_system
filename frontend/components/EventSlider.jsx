@@ -20,7 +20,6 @@ const EventSlider = ({ events }) => {
   return (
     <div className="relative w-full mt-6">
 
-      {/* LEFT BUTTON */}
       {canLeft && (
         <button
           onClick={() => sliderRef.current.scrollBy({ left: -scrollByAmount, behavior: "smooth" })}
@@ -30,7 +29,6 @@ const EventSlider = ({ events }) => {
         </button>
       )}
 
-      {/* SLIDER */}
       <div
         ref={sliderRef}
         onScroll={checkScroll}
@@ -41,7 +39,6 @@ const EventSlider = ({ events }) => {
         ))}
       </div>
 
-      {/* RIGHT BUTTON */}
       {canRight && (
         <button
           onClick={() => sliderRef.current.scrollBy({ left: scrollByAmount, behavior: "smooth" })}

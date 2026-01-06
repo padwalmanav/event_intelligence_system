@@ -27,9 +27,14 @@ const EventDetails = () => {
     { id: "speakers", label: "Speakers" },
     { id: "agenda", label: "Agenda" },
     { id: "network", label: "Network" },
+    { id: "roi", label: "ROI & Metrics" },
+    { id: "costs", label: "Costs" },
+    { id: "logistics", label: "Logistics" },
+    { id: "strategic", label: "Strategic Fit" },
     { id: "insights", label: "Insights" },
     { id: "gtm", label: "GTM Intelligence" }
   ];
+
 
   return (
     <div className="min-h-screen bg-[#0A0F1F] text-gray-200">
@@ -44,11 +49,10 @@ const EventDetails = () => {
         </div>
       ) : (
         <div>
-          {/* HERO SECTION */}
           <div className="relative h-[320px] w-full bg-gradient-to-b from-black/60 to-transparent flex items-end">
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d')] bg-cover bg-center opacity-30" />
             <div className="relative max-w-7xl mx-auto px-6 pb-10 w-full">
-              {/* TAGS */}
+
               <div className="flex flex-wrap gap-2 mb-4">
                 {event.domains?.map((tag, i) => (
                   <span
@@ -60,12 +64,10 @@ const EventDetails = () => {
                 ))}
               </div>
 
-              {/* TITLE */}
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
                 {event.title}
               </h1>
 
-              {/* META ROW */}
               <div className="flex flex-wrap items-center gap-4 text-gray-300 mt-4 text-sm">
                 <span>📅 {event.date}</span>
                 <span>📍 {event.location}</span>
@@ -82,8 +84,8 @@ const EventDetails = () => {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`py-4 px-2 text-sm font-medium transition-all relative ${activeTab === tab.id
-                        ? "text-blue-400"
-                        : "text-gray-400 hover:text-gray-200"
+                      ? "text-blue-400"
+                      : "text-gray-400 hover:text-gray-200"
                       }`}
                   >
                     {tab.label}
@@ -96,21 +98,16 @@ const EventDetails = () => {
             </div>
           </div>
 
-          {/* CONTENT AREA */}
           <div className="max-w-7xl mx-auto px-6 py-10">
 
-            {/* OVERVIEW TAB */}
             {activeTab === "overview" && (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* LEFT COLUMN - Main Content */}
                 <div className="lg:col-span-2 space-y-8">
 
-                  {/* ABOUT EVENT */}
                   <Card title="About This Event">
                     <p className="text-gray-300 leading-relaxed">{event.overview?.about}</p>
                   </Card>
 
-                  {/* WHAT YOU'LL LEARN */}
                   {event.overview?.learnings && (
                     <Card title="What You'll Learn">
                       <ul className="space-y-3">
@@ -124,7 +121,6 @@ const EventDetails = () => {
                     </Card>
                   )}
 
-                  {/* WHO SHOULD ATTEND */}
                   {event.overview?.shouldAttend && (
                     <Card title="Who Should Attend">
                       <div className="grid grid-cols-2 gap-3">
@@ -142,10 +138,8 @@ const EventDetails = () => {
                   )}
                 </div>
 
-                {/* RIGHT COLUMN - Sidebar */}
                 <div className="space-y-6">
 
-                  {/* REGISTRATION STATUS */}
                   <Card title="Registration Status">
                     <div className="space-y-4">
                       <div>
@@ -173,7 +167,6 @@ const EventDetails = () => {
                     </div>
                   </Card>
 
-                  {/* EVENT HIGHLIGHTS */}
                   {event.overview?.highlights && (
                     <Card title="Event Highlights">
                       <div className="space-y-3">
@@ -193,7 +186,6 @@ const EventDetails = () => {
                     </Card>
                   )}
 
-                  {/* ORGANIZER */}
                   <Card title="Organizer">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
@@ -293,38 +285,269 @@ const EventDetails = () => {
             {activeTab === "network" && (
               <div>
                 {event.network ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {event.network.attendeeProfiles && (
-                      <Card title="Attendee Profiles">
-                        <div className="space-y-6">
-                          <div className="p-5 bg-[#0d1117] rounded-xl border border-gray-700">
-                            <div className="flex items-baseline gap-2 mb-2">
-                              <span className="text-5xl font-bold text-blue-400">
-                                {event.network.attendeeProfiles.seniorLevel}
-                              </span>
-                            </div>
-                            <p className="text-gray-300 text-sm">
-                              {event.network.attendeeProfiles.seniorLevelDescription}
-                            </p>
-                          </div>
+                  <div className="space-y-12">
 
-                          <div className="p-5 bg-[#0d1117] rounded-xl border border-gray-700">
-                            <div className="flex items-baseline gap-2 mb-2">
-                              <span className="text-5xl font-bold text-blue-400">
-                                {event.network.attendeeProfiles.buyingInfluence}
-                              </span>
-                            </div>
-                            <p className="text-gray-300 text-sm">
-                              {event.network.attendeeProfiles.buyingInfluenceDescription}
-                            </p>
+                    <div>
+                      <h2 className="text-2xl font-bold text-white mb-2">
+                        Networking & Audience Intelligence
+                      </h2>
+                      <p className="text-gray-400 max-w-3xl">
+                        Understand who attends, how decisions are made, and how to maximize
+                        networking ROI at this event.
+                      </p>
+                    </div>
+
+                    {event.network.attendeeProfiles && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <div className="bg-gradient-to-br from-blue-500/10 to-transparent p-6 rounded-2xl border border-blue-500/20">
+                          <p className="text-gray-400 text-sm mb-2">
+                            Senior-Level Attendees
+                          </p>
+                          <div className="flex items-baseline gap-3">
+                            <span className="text-5xl font-bold text-blue-400">
+                              {event.network.attendeeProfiles.seniorLevel}
+                            </span>
+                            <span className="text-gray-400 text-sm">C-Suite / VP+</span>
                           </div>
+                          <p className="text-gray-300 text-sm mt-3 leading-relaxed">
+                            {event.network.attendeeProfiles.seniorLevelDescription}
+                          </p>
+                        </div>
+
+                        <div className="bg-gradient-to-br from-purple-500/10 to-transparent p-6 rounded-2xl border border-purple-500/20">
+                          <p className="text-gray-400 text-sm mb-2">
+                            Buying Influence
+                          </p>
+                          <div className="flex items-baseline gap-3">
+                            <span className="text-4xl font-bold text-purple-400">
+                              {event.network.attendeeProfiles.buyingInfluence}
+                            </span>
+                          </div>
+                          <p className="text-gray-300 text-sm mt-3 leading-relaxed">
+                            {event.network.attendeeProfiles.buyingInfluenceDescription}
+                          </p>
+                        </div>
+
+                      </div>
+                    )}
+
+                    {event.network.officialNetworkingEvents && (
+                      <Card title="Official Networking Events">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {event.network.officialNetworkingEvents.map((evt, i) => (
+                            <div
+                              key={i}
+                              className="p-4 bg-[#0d1117] rounded-lg border border-gray-700 hover:border-blue-500/40 transition-all"
+                            >
+                              <h4 className="text-white font-semibold mb-1">
+                                {evt.name}
+                              </h4>
+                              <p className="text-gray-400 text-sm">
+                                {evt.description}
+                              </p>
+                            </div>
+                          ))}
                         </div>
                       </Card>
                     )}
+
+                    {event.network.vendorPartnerParties && (
+                      <Card title="Vendor & Partner Parties">
+                        <p className="text-gray-300 text-sm leading-relaxed mb-2">
+                          <span className="font-semibold text-white">Availability:</span>{" "}
+                          {event.network.vendorPartnerParties.availability}
+                        </p>
+                        <p className="text-gray-400 text-sm">
+                          {event.network.vendorPartnerParties.notes}
+                        </p>
+                      </Card>
+                    )}
+
+                    {event.network.meetingOpportunities && (
+                      <Card title="Meeting & Deal-Making Opportunities">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                          <div>
+                            <h4 className="text-white font-semibold mb-3">
+                              Tools & Formats
+                            </h4>
+                            <ul className="space-y-2">
+                              {event.network.meetingOpportunities.tools.map((tool, i) => (
+                                <li key={i} className="text-gray-300 text-sm flex gap-2">
+                                  <span className="text-blue-400">•</span>
+                                  {tool}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div>
+                            <h4 className="text-white font-semibold mb-3">
+                              Strategy Notes
+                            </h4>
+                            <ul className="space-y-2 text-gray-300 text-sm">
+                              <li>
+                                <span className="text-green-400">✓</span>{" "}
+                                {event.network.meetingOpportunities.preEventOutreach}
+                              </li>
+                              <li>
+                                <span className="text-green-400">✓</span>{" "}
+                                {event.network.meetingOpportunities.onSiteMeetings}
+                              </li>
+                            </ul>
+                          </div>
+
+                        </div>
+                      </Card>
+                    )}
+
+                    {event.network.networkingValueSummary && (
+                      <div className="bg-[#0d1117] p-6 rounded-2xl border border-gray-700">
+                        <h3 className="text-lg font-semibold text-white mb-3">
+                          Overall Networking Value
+                        </h3>
+                        <p className="text-gray-300 leading-relaxed text-sm">
+                          {event.network.networkingValueSummary}
+                        </p>
+                      </div>
+                    )}
+
                   </div>
                 ) : (
                   <EmptyState message="No network information available" />
                 )}
+              </div>
+            )}
+
+            {/* ROI TAB */}
+            {activeTab === "roi" && (
+              <div className="space-y-8">
+
+                <Card title="Overall ROI Assessment">
+                  <p className="text-2xl text-green-400 font-bold">
+                    {event.roi_indicators?.overallRoiScore}
+                  </p>
+                </Card>
+
+                <Card title="Lead Generation Benchmarks">
+                  <div className="space-y-3">
+                    {event.roi_indicators?.leadGenerationBenchmarks.map((item, i) => (
+                      <Stat key={i} label={item.metric} value={item.range} />
+                    ))}
+                  </div>
+                </Card>
+
+                <Card title="Conversion Metrics">
+                  <Stat label="Lead → Meeting" value={event.roi_indicators.conversionMetrics.leadToMeeting} />
+                  <Stat label="Meeting → Opportunity" value={event.roi_indicators.conversionMetrics.meetingToOpportunity} />
+                  <Stat label="Average Deal Size" value={event.roi_indicators.conversionMetrics.averageDealSize} />
+                </Card>
+
+                <Card title="ROI Measurement Framework">
+                  <p className="text-gray-300 leading-relaxed">
+                    {event.roi_indicators.roiCalculationFramework.exampleSummary}
+                  </p>
+                </Card>
+
+              </div>
+            )}
+
+
+            {/* COST TAB */}
+            {activeTab === "costs" && (
+              <div className="space-y-8">
+
+                <Card title="Registration Pricing">
+                  {event.event_cost_analysis.registrationPricing.map((item, i) => (
+                    <Stat
+                      key={i}
+                      label={`${item.ticketType} (${item.deadline})`}
+                      value={item.price}
+                    />
+                  ))}
+                </Card>
+
+                <Card title="Estimated Attendee Budget">
+                  {Object.entries(event.event_cost_analysis.attendeeBudgetEstimate).map(
+                    ([key, value], i) => (
+                      <Stat key={i} label={key.replace(/([A-Z])/g, " $1")} value={value} />
+                    )
+                  )}
+                </Card>
+
+              </div>
+            )}
+
+            {activeTab === "logistics" && (
+              <div className="space-y-8">
+
+                <Card title="Key Dates & Deadlines">
+                  {event.logistics_planning.keyDeadlines.map((d, i) => (
+                    <Stat key={i} label={d.milestone} value={d.date} />
+                  ))}
+                </Card>
+
+                <Card title="Venue & Transportation">
+                  <p className="text-gray-300 mb-3">
+                    {event.logistics_planning.venueDetails.venueName}
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    {event.logistics_planning.venueDetails.transportationNotes}
+                  </p>
+                </Card>
+
+                <Card title="Accommodation Recommendations">
+                  <ul className="space-y-2 text-gray-300 text-sm">
+                    {event.logistics_planning.accommodationRecommendations.map((tip, i) => (
+                      <li key={i}>• {tip}</li>
+                    ))}
+                  </ul>
+                </Card>
+
+                <Card title="Pro Tips for Attendees">
+                  <ul className="space-y-2 text-gray-300 text-sm">
+                    {event.logistics_planning.proTips.map((tip, i) => (
+                      <li key={i}>✓ {tip}</li>
+                    ))}
+                  </ul>
+                </Card>
+
+              </div>
+            )}
+
+            {/* STRATEGIC FIT TAB */}
+            {activeTab === "strategic" && (
+              <div className="space-y-8">
+
+                <Card title="Ideal For">
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-300">
+                    {event.strategic_fit_assessment.idealFor.map((item, i) => (
+                      <li key={i}>✓ {item}</li>
+                    ))}
+                  </ul>
+                </Card>
+
+                <Card title="Not Recommended For">
+                  <ul className="space-y-2 text-sm text-gray-300">
+                    {event.strategic_fit_assessment.notRecommendedFor.map((item, i) => (
+                      <li key={i}>⚠ {item}</li>
+                    ))}
+                  </ul>
+                </Card>
+
+                <Card title="Objective Fit Scorecard">
+                  {event.strategic_fit_assessment.objectivesBestServed.map((obj, i) => (
+                    <Stat key={i} label={obj.objective} value={obj.score} />
+                  ))}
+                </Card>
+
+                <Card title="Final Recommendation">
+                  <p className="text-gray-300 leading-relaxed">
+                    {event.strategic_fit_assessment.finalRecommendation}
+                  </p>
+                </Card>
+
               </div>
             )}
 
@@ -334,7 +557,6 @@ const EventDetails = () => {
                 {event.insights ? (
                   <div className="space-y-8">
 
-                    {/* ROLE DISTRIBUTION */}
                     {event.insights.roleDistribution && (
                       <Card title="Role Distribution">
                         <div className="space-y-3">
@@ -358,7 +580,6 @@ const EventDetails = () => {
                       </Card>
                     )}
 
-                    {/* TOP COMPANIES */}
                     {event.insights.topCompanies && (
                       <Card title="Top Attending Companies">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -389,7 +610,6 @@ const EventDetails = () => {
                 {event.gtm_intelligence ? (
                   <div className="space-y-8">
 
-                    {/* IDEAL PERSONAS */}
                     {event.gtm_intelligence.ideal_personas && (
                       <Card title="Ideal Target Personas">
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -405,7 +625,6 @@ const EventDetails = () => {
                       </Card>
                     )}
 
-                    {/* WHY ATTEND */}
                     {event.gtm_intelligence.why_attend && (
                       <Card title="Why Attend This Event">
                         <p className="text-gray-300 leading-relaxed">
@@ -414,12 +633,10 @@ const EventDetails = () => {
                       </Card>
                     )}
 
-                    {/* BEST FIT COMPANIES */}
                     {event.gtm_intelligence.best_fit_companies && (
                       <Card title="Best Fit Companies">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                          {/* INDUSTRIES */}
                           <div>
                             <h4 className="text-white font-semibold mb-3">Industries</h4>
                             <ul className="space-y-2">
@@ -432,7 +649,6 @@ const EventDetails = () => {
                             </ul>
                           </div>
 
-                          {/* COMPANY SIZE */}
                           <div>
                             <h4 className="text-white font-semibold mb-3">Company Size</h4>
                             <ul className="space-y-2">
@@ -445,7 +661,6 @@ const EventDetails = () => {
                             </ul>
                           </div>
 
-                          {/* BUSINESS MODELS */}
                           <div>
                             <h4 className="text-white font-semibold mb-3">Business Models</h4>
                             <ul className="space-y-2">
@@ -462,7 +677,6 @@ const EventDetails = () => {
                       </Card>
                     )}
 
-                    {/* REASONS TO SKIP */}
                     {event.gtm_intelligence.reasons_to_skip && (
                       <Card title="Reasons This Event May Not Be a Fit">
                         <ul className="space-y-3">
@@ -491,8 +705,6 @@ const EventDetails = () => {
   );
 };
 
-/* ------------------ COMPONENTS ------------------ */
-
 const Card = ({ title, children }) => (
   <div className="bg-[#111827] rounded-xl p-6 border border-gray-800">
     <h2 className="text-xl font-bold text-white mb-5">{title}</h2>
@@ -503,12 +715,10 @@ const Card = ({ title, children }) => (
 const Stat = ({ label, value }) => {
   return (
     <div className="flex items-start gap-6 border-b border-white/10 pb-3">
-      {/* Label */}
       <div className="w-32 text-sm text-gray-400 shrink-0">
         {label}
       </div>
 
-      {/* Value */}
       <div className="text-sm text-white font-medium leading-relaxed">
         {value}
       </div>

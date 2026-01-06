@@ -44,10 +44,8 @@ const Events = () => {
     <div className="min-h-screen bg-[#020617] text-white">
       <Navbar search={true} searchEvent={setSearchEvent}/>
 
-      {/* PAGE CONTAINER */}
       <div className="max-w-7xl mx-auto px-4 py-10">
 
-        {/* HERO SECTION */}
         <div className="
           w-full text-center py-20 rounded-3xl mb-16
           bg-gradient-to-b from-[#0a1125] to-[#000510]
@@ -62,7 +60,6 @@ const Events = () => {
           </p>
         </div>
 
-        {/* EVENTS SECTION */}
         {
           isLoading ? (
             <div className="text-center text-gray-400 text-xl">

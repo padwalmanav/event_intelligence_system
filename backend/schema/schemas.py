@@ -19,10 +19,8 @@ class insert_document_schema(BaseModel):
     last_scrapped_at: datetime
 
 class create_user_schema(BaseModel):
-    first_name: str
-    last_name: str
-    email_phone: str
+    full_name: str
+    phn_no: str
+    email: str
     password: str
-    profession: str
-    location: str
-    interests: List[str]
+    
