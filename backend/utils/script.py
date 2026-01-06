@@ -4,6 +4,18 @@ from utils.json_parser import extract_clean_json
 from db.mongo import insert_document
 
 events = [
+    "CES 2026",
+    "SAS Innovate 2026",
+    "India AI Impact Summit 2026",
+    "4th Information Technology Conference 2026",
+    "FOSDEM 2026",
+    "TechEx Global 2026",
+    "Mobile World Congress (MWC) 2026 - The IQ Era",
+    "Glossy E-Commerce Summit 2026",
+    "SaaS Insider TECHCON 2026 - CTO Summit",
+    "RSAC 2026 Conference", 
+    "Convergence India 2026",
+    "KubeCon + CloudNativeCon Europe 2026",
     "Global Supply Chain Summit",
     "MicroConf US 2026",
     "Sustainable Business Forum",
