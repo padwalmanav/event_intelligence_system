@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import EventSlider from "../components/EventSlider";
-import backend_url from "../constants/backend_url";
 import toast from "react-hot-toast";
 
 const Events = () => {
@@ -20,7 +19,7 @@ const Events = () => {
     }
 
     try {
-      const res = await axios.get(`${backend_url}/events`);
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/events`);
       setEvents(res.data.events);
       toast.success("Events Loaded", { id: toastId });
     } catch (err) {

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import backend_url from "../constants/backend_url"
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -12,7 +11,7 @@ const EventDetails = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await axios.get(`${backend_url}/events/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/events/${id}`);
         setEvent(res.data.event);
       } catch (err) {
         console.error("Error fetching event:", err);

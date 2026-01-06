@@ -6,9 +6,9 @@ from schema.schemas import create_user_schema
 
 app = FastAPI()
 
-app.add_middleware(
+app.add_middleware( 
     CORSMiddleware,
-    allow_origins = ["*"],
+    allow_origins = ["https://event-intelligence-system.vercel.app"],
     allow_credentials = True,
     allow_methods = ['*'],
     allow_headers = ['*']
