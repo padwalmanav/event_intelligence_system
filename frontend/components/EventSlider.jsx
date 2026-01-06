@@ -15,7 +15,7 @@ const EventSlider = ({ events }) => {
 
   useEffect(() => checkScroll(), [events]);
 
-  const scrollByAmount = 300;
+  const scrollByAmount = 400;
 
   return (
     <div className="relative w-full mt-6">
