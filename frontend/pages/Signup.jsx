@@ -1,10 +1,42 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import axios from "axios";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const [fullName, setFullname] = useState("")
+  const [phoneNo, setPhoneNo] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const navigate = useNavigate()
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault()
+    try{
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-user`,{
+        full_name: fullName,
+        phone_no: phoneNo,
+        email: email,
+        password: password
+      })
+      if(res.data.message == 'success'){
+        toast.success("signup Successfull")
+        navigate('/login')
+      }else if(res.data.message == 'fail'){
+        toast.error("Failed to signup, please try again later")
+      }else{
+        toast.error("Failed to sign up")
+      }
+    }catch(err){
+      toast.error("Something went wrong, please try again later")
+      console.log(`error while sending signup user data to backend, ${err}`)
+    }
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#020617] px-4">
-      
+
       {/* Card */}
       <div className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8">
 
@@ -19,8 +51,10 @@ const Signup = () => {
         </p>
 
         {/* Form */}
-        <form className="space-y-5">
-
+        <form 
+          className="space-y-5"
+          onSubmit={handleSubmit}
+        >
           {/* Name */}
           <div>
             <label className="block text-sm text-gray-300 mb-1">
@@ -29,6 +63,20 @@ const Signup = () => {
             <input
               type="text"
               placeholder="John Doe"
+              onChange={(e)=>setFullname(e.target.value)}
+              className="w-full px-4 py-2 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60 transition"
+            />
+          </div>
+
+          {/* Phone no */}
+          <div>
+            <label className="block text-sm text-gray-300 mb-1">
+              Phone number
+            </label>
+            <input
+              type="text"
+              placeholder="XXXXX XXXXX"
+              onChange={(e)=>setPhoneNo(e.target.value)}
               className="w-full px-4 py-2 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60 transition"
             />
           </div>
@@ -41,6 +89,7 @@ const Signup = () => {
             <input
               type="email"
               placeholder="john@example.com"
+              onChange={(e)=>setEmail(e.target.value)}
               className="w-full px-4 py-2 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60 transition"
             />
           </div>
@@ -53,6 +102,7 @@ const Signup = () => {
             <input
               type="password"
               placeholder="••••••••"
+              onChange={(e)=>setPassword(e.target.value)}
               className="w-full px-4 py-2 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60 transition"
             />
           </div>

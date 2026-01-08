@@ -53,7 +53,30 @@ def create_new_user(user: dict):
         new_user = db['users'].insert_one(user)
         return str(new_user.inserted_id)
     except Exception as e:
-        return f"failed to insert user {str(e)}"
+        print(f"failed to insert user {str(e)}")
+        return None
+
+def check_user_isPresent(user: dict):
+    try:
+        is_present = db['users'].find_one({'phone_no':user['phone_no']})
+        if is_present:
+            password = is_present['password']
+            if password == user['password']:
+                return {
+                    'is_present': True,
+                    'password_match': True
+                }
+            else:
+                return {
+                    'is_present': True,
+                    'password_match': False
+                }
+        else:
+            return {
+                'is_present': False
+            }
+    except Exception as e:
+        print(f"Error while checking user in db:{str(e)}")
 
 def get_all_users() -> dict:
     try:

@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from db.mongo import get_documents, get_document_by_id, create_new_user
-from schema.schemas import create_user_schema
+from db.mongo import get_documents, get_document_by_id, create_new_user, check_user_isPresent
+from schema.schemas import create_user_schema, login_user_schema
 
 app = FastAPI()
 
 app.add_middleware( 
     CORSMiddleware,
-    allow_origins = ["https://event-intelligence-system.vercel.app"],
+    allow_origins = ["https://event-intelligence-system.vercel.app","http://localhost:5173"],
     allow_credentials = True,
     allow_methods = ['*'],
     allow_headers = ['*']
@@ -43,21 +43,37 @@ def create_user(
 ):
     try:
         new_user = {
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "email_phone": user.email_phone,
-            "password": user.password,
-            "profession": user.profession,
-            "location": user.location,
-            "interests": user.interests,
+            "full_name":user.full_name,
+            "phone_no":user.phone_no,
+            "email":user.email,
+            "password":user.password
         }
 
         user_created = create_new_user(new_user)
         if user_created:
             print("User id:", user_created)
-            return {"success": "user created successfully"}
+            return {"message": "success"}
         else:
-            print("Error:", user_created)
-            return {"error": "Failed to create user"}
+            return {"message": "fail"}
     except Exception as e:
-        return {"error": f"Got error at create user api {str(e)}"}
+        print(f"Got error at create user api {str(e)}")
+    
+
+@app.post('/login')
+def check_user(
+    user: login_user_schema
+):
+    try:
+        user = check_user_isPresent({
+            'phone_no': user.phone_no,
+            'password': user.password
+        })
+
+        if user['is_present'] == True and user['password_match'] == True:
+            return {'message':'success'}
+        elif user['is_present'] == True and user['password_match'] == False:
+            return {'message':'password'}
+        else:
+            return {'message':'fail'}
+    except Exception as e:
+        print(f"Error at login api: {str(e)}")

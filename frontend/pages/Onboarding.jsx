@@ -4,6 +4,11 @@ import Navbar from "../components/Navbar";
 
 const Onboarding = () => {
   const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem("isLoggedIn")
+
+  const handleEventsNavigation = ()=>{
+    isLoggedIn == "true" ? navigate('/events') : navigate('/login')
+  }
 
   return (
     <div className="min-h-screen bg-[#0A0F1F] text-gray-200">
@@ -32,7 +37,7 @@ const Onboarding = () => {
 
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <button
-              onClick={() => navigate("/events")}
+              onClick={handleEventsNavigation}
               className="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl transition-all"
             >
               Explore Events
@@ -152,7 +157,7 @@ const Onboarding = () => {
             time, team, and budget should go.
           </p>
           <button
-            onClick={() => navigate("/events")}
+            onClick={handleEventsNavigation}
             className="px-10 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl transition-all"
           >
             Get Started with MyEventsIQ

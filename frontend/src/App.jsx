@@ -7,6 +7,7 @@ import "../styles.css"
 import Signup from '../pages/Signup'
 import About from '../pages/About'
 import Login from '../pages/Login'
+import ProtectedRoute from '../components/ProtectedRoute'
 
 const router = createBrowserRouter([
   {
@@ -14,11 +15,17 @@ const router = createBrowserRouter([
     path:'/'
   },
   {
-    element:<Events />,
+    element:
+      <ProtectedRoute>
+        <Events />
+      </ProtectedRoute>,
     path:'/events'
   },
   {
-    element:<EventDetails/>,
+    element:
+    <ProtectedRoute>
+      <EventDetails/>
+    </ProtectedRoute>,
     path:'/events/:id'
   },
   {
