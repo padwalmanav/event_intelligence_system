@@ -4,34 +4,37 @@ import toast from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [phoneNo,setPhoneNo] = useState(null);
+  const [phoneNo, setPhoneNo] = useState(null);
   const [password, setPassword] = useState(null);
+  const [logging, setLogging] = useState(false);
 
   const navigate = useNavigate()
 
-  const handleSubmit = async(e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try{
+    try {
+      setLogging(true)
       const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, {
         phone_no: phoneNo,
         password: password
       })
-      if(res.data.message == 'success'){
-        localStorage.setItem('isLoggedIn','true')
+      setLogging(false)
+      if (res.data.message == 'success') {
+        localStorage.setItem('isLoggedIn', 'true')
         toast.success('Login Successfull')
         navigate('/events')
-      }else if(res.data.message == 'password'){
+      } else if (res.data.message == 'password') {
         toast.error('Incorrect Password')
-      }else if(res.data.message == 'fail'){
+      } else if (res.data.message == 'fail') {
         toast.error('Invalid user')
-      }else{
+      } else {
         toast.error("Failed to login")
       }
-    }catch(err){
+    } catch (err) {
       toast.error("Something went wrong, please try again later")
       console.log(`error while sending login user data to backend: ${err}`)
-    } 
+    }
   }
 
   return (
@@ -51,10 +54,10 @@ const Login = () => {
         </p>
 
         {/* Form */}
-        <form 
+        <form
           className="space-y-5"
           onSubmit={handleSubmit}
-          >
+        >
           <div>
             <label className="block text-sm text-gray-300 mb-1">
               Phone Number
@@ -62,7 +65,7 @@ const Login = () => {
             <input
               type="text"
               placeholder="XXXXX XXXXX"
-              onChange={(e)=>setPhoneNo(e.target.value)}
+              onChange={(e) => setPhoneNo(e.target.value)}
               className="w-full px-4 py-2 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60 transition"
             />
           </div>
@@ -75,7 +78,7 @@ const Login = () => {
             <input
               type="password"
               placeholder="••••••••"
-              onChange={(e)=>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60 transition"
             />
           </div>
@@ -91,12 +94,23 @@ const Login = () => {
           </div>
 
           {/* Button */}
-          <button
-            type="submit"
-            className="w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition text-white font-semibold shadow-lg"
-          >
-            Login
-          </button>
+          {
+            logging ?
+              <button
+                type="submit"
+                disabled={true}
+                className="w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition text-white font-semibold shadow-lg"
+              >
+                Logging in ...
+              </button>
+              :
+              <button
+                type="submit"
+                className="w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition text-white font-semibold shadow-lg"
+              >
+                Login
+              </button>
+          }
         </form>
 
         {/* Footer */}
