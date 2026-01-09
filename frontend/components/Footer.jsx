@@ -23,7 +23,7 @@ const Footer = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-center gap-3">
                 <span>📧</span>
-                <span>contact@myeventsiq.com</span>
+                <span>myeventsiq@gmail.com</span>
               </div>
               <div className="flex items-center gap-3">
                 <span>📍</span>
