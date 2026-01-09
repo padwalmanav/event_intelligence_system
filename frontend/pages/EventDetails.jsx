@@ -455,28 +455,39 @@ const EventDetails = () => {
 
             {/* COST TAB */}
             {activeTab === "costs" && (
-              <div className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
+                {/* Registration Pricing */}
                 <Card title="Registration Pricing">
-                  {event.event_cost_analysis.registrationPricing.map((item, i) => (
-                    <Stat
-                      key={i}
-                      label={`${item.ticketType} (${item.deadline})`}
-                      value={item.price}
-                    />
-                  ))}
+                  <div className="space-y-3">
+                    {event.event_cost_analysis.registrationPricing.map((item, i) => (
+                      <Stat
+                        key={i}
+                        label={`${item.ticketType} (${item.deadline})`}
+                        value={item.price}
+                      />
+                    ))}
+                  </div>
                 </Card>
 
+                {/* Estimated Attendee Budget */}
                 <Card title="Estimated Attendee Budget">
-                  {Object.entries(event.event_cost_analysis.attendeeBudgetEstimate).map(
-                    ([key, value], i) => (
-                      <Stat key={i} label={key.replace(/([A-Z])/g, " $1")} value={value} />
-                    )
-                  )}
+                  <div className="space-y-3">
+                    {Object.entries(event.event_cost_analysis.attendeeBudgetEstimate).map(
+                      ([key, value], i) => (
+                        <Stat
+                          key={i}
+                          label={key.replace(/([A-Z])/g, " $1")}
+                          value={value}
+                        />
+                      )
+                    )}
+                  </div>
                 </Card>
 
               </div>
             )}
+
 
             {activeTab === "logistics" && (
               <div className="space-y-8">
@@ -536,10 +547,44 @@ const EventDetails = () => {
                 </Card>
 
                 <Card title="Objective Fit Scorecard">
-                  {event.strategic_fit_assessment.objectivesBestServed.map((obj, i) => (
-                    <Stat key={i} label={obj.objective} value={obj.score} />
-                  ))}
+                  <div className="space-y-4">
+                    {[...event.strategic_fit_assessment.objectivesBestServed]
+                      .map((obj) => {
+                        // Normalize score to percentage
+                        let percent = 0;
+
+                        if (typeof obj.score === "number") {
+                          percent = Math.min(obj.score, 100);
+                        } else if (typeof obj.score === "string" && obj.score.includes("/")) {
+                          const [val, total] = obj.score.split("/").map(Number);
+                          percent = total ? (val / total) * 100 : 0;
+                        }
+
+                        return { ...obj, percent };
+                      })
+                      .sort((a, b) => b.percent - a.percent)
+                      .map((obj, i) => (
+                        <div key={i} className="space-y-2">
+                          {/* Label + Score */}
+                          <div className="flex justify-between text-sm">
+                            <span className="text-gray-300">{obj.objective}</span>
+                            <span className="text-blue-400 font-medium">
+                              {obj.score}
+                            </span>
+                          </div>
+
+                          {/* Progress Bar */}
+                          <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+                            <div
+                              className="h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all"
+                              style={{ width: `${obj.percent}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                  </div>
                 </Card>
+
 
                 <Card title="Final Recommendation">
                   <p className="text-gray-300 leading-relaxed">
@@ -581,7 +626,7 @@ const EventDetails = () => {
 
                     {event.insights.topCompanies && (
                       <Card title="Top Attending Companies">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                           {event.insights.topCompanies.map((company, i) => (
                             <div
                               key={i}
@@ -590,7 +635,7 @@ const EventDetails = () => {
                               <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
                                 <span className="text-blue-400 font-bold">{i + 1}</span>
                               </div>
-                              <span className="text-gray-300">{company}</span>
+                              <span className="text-gray-300 truncate">{company}</span>
                             </div>
                           ))}
                         </div>

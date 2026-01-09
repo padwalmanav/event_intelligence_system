@@ -95,7 +95,7 @@ const EventCard = ({ event }) => {
           onClick={() => navigate(`/events/${event._id.$oid || event._id}`)}
           className="w-full bg-blue-600 hover:bg-blue-700 transition-all py-2 rounded-xl text-sm font-medium shadow-lg"
         >
-          View Details →
+          View Insights →
         </button>
       </div>
     </div>

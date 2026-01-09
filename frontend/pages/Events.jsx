@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import EventSlider from "../components/EventSlider";
 import toast from "react-hot-toast";
+import Footer from "../components/Footer";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -43,7 +44,7 @@ const Events = () => {
     <div className="min-h-screen bg-[#020617] text-white">
       <Navbar search={true} searchEvent={setSearchEvent}/>
 
-      <div className="max-w-7xl mx-auto px-4 py-10">
+      <div className="max-w-7xl mx-auto px-4 py-20">
 
         <div className="
           w-full text-center py-20 rounded-3xl mb-16
@@ -81,6 +82,7 @@ const Events = () => {
         }
 
       </div>
+      <Footer/>
     </div>
   );
 };

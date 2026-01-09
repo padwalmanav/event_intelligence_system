@@ -15,10 +15,10 @@ const Signup = () => {
     e.preventDefault()
     try{
       const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-user`,{
-        full_name: fullName,
-        phone_no: phoneNo,
-        email: email,
-        password: password
+        "full_name": fullName,
+        "phone_no": phoneNo,
+        "email": email,
+        "password": password
       })
       if(res.data.message == 'success'){
         toast.success("signup Successfull")

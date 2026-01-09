@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer"
 
 const Onboarding = () => {
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("isLoggedIn")
 
-  const handleEventsNavigation = ()=>{
+  const handleEventsNavigation = () => {
     isLoggedIn == "true" ? navigate('/events') : navigate('/login')
   }
 
@@ -37,10 +38,10 @@ const Onboarding = () => {
 
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <button
-              onClick={handleEventsNavigation}
+              onClick={()=>navigate('/contact')}
               className="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl transition-all"
             >
-              Explore Events
+              Contact Us
             </button>
             <button
               onClick={() => navigate("/about")}
@@ -148,22 +149,49 @@ const Onboarding = () => {
       {/* CTA */}
       <section className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10" />
+
         <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
-            Turn Events Into Strategic Assets
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Know If an Event Is Worth It — Before You Attend
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto mb-10">
-            Stop guessing. Start making data-backed decisions about where your
-            time, team, and budget should go.
+
+          <p className="text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Analyze ROI, audience quality, and GTM fit in minutes.
+            Make confident, data-backed decisions about where your time,
+            team, and budget should go.
           </p>
-          <button
-            onClick={handleEventsNavigation}
-            className="px-10 py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl transition-all"
-          >
-            Get Started with MyEventsIQ
-          </button>
+
+          <div className="flex sm:flex-row justify-center gap-4">
+            {/* Primary CTA */}
+            {
+              localStorage.getItem('isLoggedIn') == 'true'
+                ?
+                <button
+                  onClick={handleEventsNavigation}
+                  className="
+                    px-10 py-4 bg-blue-500 hover:bg-blue-600
+                    text-white font-semibold rounded-xl
+                    transition-all shadow-lg shadow-blue-500/20
+                  "
+                >
+                  View Event Intelligence
+                </button>
+                :
+                <button
+                  onClick={handleEventsNavigation}
+                  className="
+                    px-10 py-4 bg-blue-500 hover:bg-blue-600
+                    text-white font-semibold rounded-xl
+                    transition-all shadow-lg shadow-blue-500/20
+                  "
+                >
+                  Analyze an Event
+                </button>
+            }
+          </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
