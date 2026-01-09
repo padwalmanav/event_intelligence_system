@@ -604,22 +604,31 @@ const EventDetails = () => {
                     {event.insights.roleDistribution && (
                       <Card title="Role Distribution">
                         <div className="space-y-3">
-                          {event.insights.roleDistribution.map((role, i) => (
-                            <div key={i} className="flex items-center gap-4">
-                              <div className="flex-1">
-                                <div className="flex justify-between mb-2">
-                                  <span className="text-gray-300 text-sm">{role.role}</span>
-                                  <span className="text-blue-400 font-semibold text-sm">{role.percentage}</span>
-                                </div>
-                                <div className="w-full bg-gray-700 rounded-full h-2">
-                                  <div
-                                    className="bg-blue-500 h-2 rounded-full transition-all"
-                                    style={{ width: role.percentage }}
-                                  ></div>
+                          {[...event.insights.roleDistribution]
+                            .sort((a, b) => {
+                              const pa = parseFloat(a.percentage);
+                              const pb = parseFloat(b.percentage);
+                              return pb - pa; // DESCENDING
+                            })
+                            .map((role, i) => (
+                              <div key={i} className="flex items-center gap-4">
+                                <div className="flex-1">
+                                  <div className="flex justify-between mb-2">
+                                    <span className="text-gray-300 text-sm">{role.role}</span>
+                                    <span className="text-blue-400 font-semibold text-sm">
+                                      {role.percentage}
+                                    </span>
+                                  </div>
+
+                                  <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+                                    <div
+                                      className="bg-blue-500 h-2 rounded-full transition-all"
+                                      style={{ width: role.percentage }}
+                                    />
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          ))}
+                            ))}
                         </div>
                       </Card>
                     )}
