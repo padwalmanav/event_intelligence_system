@@ -1,15 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer"
 
 const Onboarding = () => {
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("isLoggedIn")
-
-  const handleEventsNavigation = () => {
-    isLoggedIn == "true" ? navigate('/events') : navigate('/login')
-  }
 
   return (
     <div className="min-h-screen bg-[#0A0F1F] text-gray-200">
@@ -166,8 +162,8 @@ const Onboarding = () => {
             {
               localStorage.getItem('isLoggedIn') == 'true'
                 ?
-                <button
-                  onClick={handleEventsNavigation}
+                <NavLink
+                  to='/events'
                   className="
                     px-10 py-4 bg-blue-500 hover:bg-blue-600
                     text-white font-semibold rounded-xl
@@ -175,10 +171,10 @@ const Onboarding = () => {
                   "
                 >
                   View Event Intelligence
-                </button>
+                </NavLink>
                 :
-                <button
-                  onClick={handleEventsNavigation}
+                <NavLink
+                  to='/events'
                   className="
                     px-10 py-4 bg-blue-500 hover:bg-blue-600
                     text-white font-semibold rounded-xl
@@ -186,7 +182,7 @@ const Onboarding = () => {
                   "
                 >
                   Analyze an Event
-                </button>
+                </NavLink>
             }
           </div>
         </div>

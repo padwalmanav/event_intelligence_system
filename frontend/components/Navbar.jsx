@@ -72,7 +72,7 @@ const Navbar = (props) => {
           </NavLink>
 
           <NavLink
-            to={isLoggedIn == 'true' ? '/events' : "/login"}
+            to='/events'
             className={({ isActive }) =>
               `text-lg font-medium transition-all duration-200 ${isActive
                 ? "text-blue-400 border-b-2 border-blue-400 pb-1"

@@ -38,8 +38,8 @@ const Footer = () => {
             <ul className="space-y-3 text-lg">
               <li><NavLink to="/" className="hover:text-blue-400">Home</NavLink></li>
               <li><NavLink to="/events" className="hover:text-blue-400">Events</NavLink></li>
-              <li><NavLink to="/pricing" className="hover:text-blue-400">Pricing</NavLink></li>
-              <li><NavLink to="/features" className="hover:text-blue-400">Features</NavLink></li>
+              <li><NavLink to="" className="hover:text-blue-400">Pricing</NavLink></li>
+              <li><NavLink to="" className="hover:text-blue-400">Features</NavLink></li>
             </ul>
           </div>
 
@@ -49,9 +49,9 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-5 text-lg">Company</h3>
             <ul className="space-y-3 text-lg">
               <li><NavLink to="/about" className="hover:text-blue-400">About</NavLink></li>
-              <li><NavLink to="/blog" className="hover:text-blue-400">Blog</NavLink></li>
-              <li><NavLink to="/careers" className="hover:text-blue-400">Careers</NavLink></li>
-              <li><NavLink to="/partners" className="hover:text-blue-400">Partners</NavLink></li>
+              <li><NavLink to="" className="hover:text-blue-400">Blog</NavLink></li>
+              <li><NavLink to="" className="hover:text-blue-400">Careers</NavLink></li>
+              <li><NavLink to="" className="hover:text-blue-400">Partners</NavLink></li>
             </ul>
           </div>
 
@@ -81,7 +81,8 @@ const Footer = () => {
                     focus:outline-none focus:ring-2 focus:ring-blue-400/50
                   "
                 />
-                <button
+                <NavLink
+                  to=""
                   className="
                     px-6 py-3 rounded-lg
                     bg-blue-500 text-white text-sm font-semibold
@@ -90,7 +91,7 @@ const Footer = () => {
                   "
                 >
                   Subscribe
-                </button>
+                </NavLink>
               </div>
 
               <p className="text-xs text-gray-500 mt-4">

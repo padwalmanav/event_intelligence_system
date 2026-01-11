@@ -35,7 +35,7 @@ const EventSlider = ({ events }) => {
         className="flex gap-4 overflow-x-auto scroll-smooth no-scrollbar px-10 py-3"
       >
         {events.map((ev) => (
-          <EventCard key={ev._id.$oid} event={ev} />
+          <EventCard key={ev._id?.$oid || ev._id} event={ev} />
         ))}
       </div>
 

@@ -7,10 +7,8 @@ import "../styles.css"
 import Signup from '../pages/Signup'
 import About from '../pages/About'
 import Login from '../pages/Login'
-import ProtectedRoute from '../components/ProtectedRoute'
-import { Contact } from 'lucide-react'
+import ProtectedEventRoute from '../components/ProtectedEventRoute'
 import ContactUs from '../pages/ContactUs'
-import Footer from '../components/Footer'
 
 const router = createBrowserRouter([
   {
@@ -18,17 +16,14 @@ const router = createBrowserRouter([
     path:'/'
   },
   {
-    element:
-      <ProtectedRoute>
-        <Events />
-      </ProtectedRoute>,
+    element:<Events />,
     path:'/events'
   },
   {
     element:
-    <ProtectedRoute>
+    <ProtectedEventRoute>
       <EventDetails/>
-    </ProtectedRoute>,
+    </ProtectedEventRoute>,
     path:'/events/:id'
   },
   {

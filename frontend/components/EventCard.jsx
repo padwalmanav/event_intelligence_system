@@ -5,15 +5,14 @@ const parseDateString = (dateStr) => {
   if (!dateStr) return { month: null, year: null, day: null };
 
   const parts = dateStr.split(" ");
-  const month = parts[0]; 
-  const year = parts[parts.length - 1]; 
+  const month = parts[0];
+  const year = parts[parts.length - 1];
 
   const dayPart = parts[1]?.replace(",", "");
   const day = dayPart || null;
 
   return { month, year, day };
 };
-
 
 const getMonthNum = (monthName) => {
   const months = {
@@ -27,8 +26,59 @@ const EventCard = ({ event }) => {
   const navigate = useNavigate();
   const date = new Date();
   const currentMonth = date.getMonth();
-  
+
   const { month, year, day } = parseDateString(event.date);
+  // 🔒 LOCKED CARD UI
+  if (event.isLocked) {
+    return (
+      <div
+        className="min-w-[300px] max-w-[300px] rounded-2xl overflow-hidden
+                 bg-[#0b0f1a] border border-[#1c1f27]
+                 shadow-xl opacity-90 hover:opacity-100
+                 transition-all duration-300"
+      >
+        <div className="relative h-40 w-full">
+          <img
+            src={
+              event.image ||
+              "https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
+            }
+            alt="event-banner"
+            className="h-full w-full object-cover blur-sm scale-105"
+          />
+
+          <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
+            <span className="text-white text-lg font-semibold tracking-wide">
+              🔒 Locked Preview
+            </span>
+          </div>
+        </div>
+
+        <div className="p-5 text-white">
+          <h2 className="text-lg font-semibold mb-2 line-clamp-2">
+            {event.title}
+          </h2>
+
+          <p className="text-gray-400 text-sm mb-3 line-clamp-3">
+            {event.about}...
+          </p>
+
+          <div className="text-gray-400 text-sm mb-4">
+            📍 {event.location}
+          </div>
+
+          <button
+            onClick={() => navigate("/login")}
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-500
+                     hover:from-blue-500 hover:to-blue-600
+                     transition-all py-2 rounded-xl text-sm font-medium shadow-lg"
+          >
+            Login to Unlock →
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-w-[300px] max-w-[300px] bg-[#0d0f16] rounded-2xl shadow-xl overflow-hidden border border-[#1c1f27] hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
@@ -81,7 +131,7 @@ const EventCard = ({ event }) => {
         </div>
 
         <div className="flex items-center gap-2 text-gray-300 text-sm mb-3">
-          <Briefcase size={14} /> 
+          <Briefcase size={14} />
           {event.overview?.shouldAttend?.[0]?.slice(0, 30) || "N/A"}...
         </div>
 
