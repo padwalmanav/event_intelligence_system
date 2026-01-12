@@ -9,7 +9,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = ["https://event-intelligence-system.vercel.app","http://localhost:5173"],
+    allow_origins = ["https://event-intelligence-system.vercel.app","http://localhost:5173","https://myeventsiq.com"],
     allow_credentials = True,
     allow_methods = ['*'],
     allow_headers = ['*']
