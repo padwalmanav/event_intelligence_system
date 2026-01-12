@@ -3,10 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from db.mongo import get_documents, get_document_by_id, create_new_user, check_user_isPresent
 from schema.schemas import create_user_schema, login_user_schema
+from utils.bcrypt_password import encrypt_password
 
 app = FastAPI()
 
-app.add_middleware( 
+app.add_middleware(
     CORSMiddleware,
     allow_origins = ["https://event-intelligence-system.vercel.app","http://localhost:5173"],
     allow_credentials = True,
@@ -42,11 +43,14 @@ def create_user(
     user: create_user_schema,
 ):
     try:
+        hashed_password = encrypt_password(user.password)
+        print("hashed password:", hashed_password)
+
         new_user = {
             "full_name":user.full_name,
             "phone_no":user.phone_no,
             "email":user.email,
-            "password":user.password
+            "password":hashed_password
         }
 
         user_created = create_new_user(new_user)

@@ -6,6 +6,8 @@ from datetime import datetime
 from bson.objectid import ObjectId
 load_dotenv()
 
+from utils.bcrypt_password import check_password
+
 connection = MongoClient(os.getenv("MONGO_URI"))
 
 db = connection['intelligence_event_system']
@@ -60,8 +62,8 @@ def check_user_isPresent(user: dict):
     try:
         is_present = db['users'].find_one({'phone_no':user['phone_no']})
         if is_present:
-            password = is_present['password']
-            if password == user['password']:
+            hashed_password = is_present['password']
+            if check_password(user['password'], hashed_password):
                 return {
                     'is_present': True,
                     'password_match': True

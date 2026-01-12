@@ -10,4 +10,5 @@ google-genai
 groq
 tavily
 anthropic
-langchain_anthropic 
+langchain_anthropic
+bcrypt
