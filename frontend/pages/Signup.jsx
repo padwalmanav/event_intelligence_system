@@ -8,18 +8,21 @@ const Signup = () => {
   const [phoneNo, setPhoneNo] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const navigate = useNavigate()
 
   const handleSubmit = async(e)=>{
     e.preventDefault()
     try{
+      setIsSubmitting(true)
       const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-user`,{
         "full_name": fullName,
         "phone_no": phoneNo,
         "email": email,
         "password": password
       })
+      setIsSubmitting(false)
       if(res.data.message == 'success'){
         toast.success("signup Successfull")
         navigate('/login')
@@ -61,6 +64,7 @@ const Signup = () => {
               Full Name
             </label>
             <input
+              required
               type="text"
               placeholder="John Doe"
               onChange={(e)=>setFullname(e.target.value)}
@@ -74,6 +78,7 @@ const Signup = () => {
               Phone number
             </label>
             <input
+              required
               type="text"
               placeholder="XXXXX XXXXX"
               onChange={(e)=>setPhoneNo(e.target.value)}
@@ -87,6 +92,7 @@ const Signup = () => {
               Email Address
             </label>
             <input
+              required
               type="email"
               placeholder="john@example.com"
               onChange={(e)=>setEmail(e.target.value)}
@@ -100,6 +106,7 @@ const Signup = () => {
               Password
             </label>
             <input
+              required
               type="password"
               placeholder="••••••••"
               onChange={(e)=>setPassword(e.target.value)}
@@ -113,6 +120,7 @@ const Signup = () => {
               Confirm Password
             </label>
             <input
+              required
               type="password"
               placeholder="••••••••"
               className="w-full px-4 py-2 rounded-lg bg-white/10 text-white placeholder-gray-400 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/60 transition"
@@ -122,9 +130,19 @@ const Signup = () => {
           {/* Button */}
           <button
             type="submit"
-            className="w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition text-white font-semibold shadow-lg"
+            disabled={isSubmitting}
+            className={`w-full py-2 rounded-lg text-white font-semibold shadow-lg ${
+              isSubmitting ? 
+                "bg-blue-400 cursor-not-allowed opacity-70 transition" 
+                : 
+                "bg-blue-500 hover:bg-blue-600 transition"
+            }`}
           >
-            Create Account
+            {
+              isSubmitting ?
+                "Creating Account" :
+                "Create Account"
+            }
           </button>
         </form>
 

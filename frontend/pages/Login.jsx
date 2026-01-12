@@ -13,6 +13,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (logging) return;
+
     try {
       setLogging(true)
       const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, {
@@ -63,6 +65,7 @@ const Login = () => {
               Phone Number
             </label>
             <input
+              required
               type="text"
               placeholder="XXXXX XXXXX"
               onChange={(e) => setPhoneNo(e.target.value)}
@@ -76,6 +79,7 @@ const Login = () => {
               Password
             </label>
             <input
+              required
               type="password"
               placeholder="••••••••"
               onChange={(e) => setPassword(e.target.value)}
@@ -94,23 +98,17 @@ const Login = () => {
           </div>
 
           {/* Button */}
-          {
-            logging ?
-              <button
-                type="submit"
-                disabled={true}
-                className="w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition text-white font-semibold shadow-lg"
-              >
-                Logging in ...
-              </button>
-              :
-              <button
-                type="submit"
-                className="w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition text-white font-semibold shadow-lg"
-              >
-                Login
-              </button>
-          }
+          <button
+            type="submit"
+            disabled={logging}
+            className={`w-full py-2 rounded-lg text-white font-semibold shadow-lg transition ${logging
+                ? "bg-blue-400 cursor-not-allowed opacity-70"
+                : "bg-blue-500 hover:bg-blue-600"
+              }`}
+          >
+            {logging ? "Logging in..." : "Login"}
+          </button>
+
         </form>
 
         {/* Footer */}
