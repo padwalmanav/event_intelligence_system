@@ -52,8 +52,17 @@ def get_document_by_id(id: str):
 # ---------------- User collection ----------------
 def create_new_user(user: dict):
     try:
-        new_user = db['users'].insert_one(user)
-        return str(new_user.inserted_id)
+        is_present = db['users'].find_one({'phone_no':user['phone_no']})
+        if is_present:
+            return {
+                'is_present': True
+            }
+        else:
+            new_user = db['users'].insert_one(user)
+            return {
+                'is_present': False,
+                'user_id': str(new_user.inserted_id)
+            }
     except Exception as e:
         print(f"failed to insert user {str(e)}")
         return None

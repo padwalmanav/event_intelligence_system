@@ -15,6 +15,11 @@ const Signup = () => {
   const handleSubmit = async(e)=>{
     e.preventDefault()
     try{
+      if(phoneNo.length != 10){
+        toast.error("Please Enter 10 digit phone number")
+        return;
+      }
+
       setIsSubmitting(true)
       const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/create-user`,{
         "full_name": fullName,
@@ -26,6 +31,8 @@ const Signup = () => {
       if(res.data.message == 'success'){
         toast.success("signup Successfull")
         navigate('/login')
+      }else if(res.data.message == 'present'){
+        toast.error("Mobile number already registered")
       }else if(res.data.message == 'fail'){
         toast.error("Failed to signup, please try again later")
       }else{
@@ -60,7 +67,7 @@ const Signup = () => {
         >
           {/* Name */}
           <div>
-            <label className="block text-sm text-gray-300 mb-1">
+            <label className="block text-md text-gray-300 mb-1">
               Full Name
             </label>
             <input
@@ -74,7 +81,7 @@ const Signup = () => {
 
           {/* Phone no */}
           <div>
-            <label className="block text-sm text-gray-300 mb-1">
+            <label className="block text-md text-gray-300 mb-1">
               Phone number
             </label>
             <input
@@ -88,8 +95,8 @@ const Signup = () => {
 
           {/* Email */}
           <div>
-            <label className="block text-sm text-gray-300 mb-1">
-              Email Address
+            <label className="block text-md text-gray-300 mb-1">
+              Email Address <span className="text-sm">(optional)</span>
             </label>
             <input
               required
@@ -102,7 +109,7 @@ const Signup = () => {
 
           {/* Password */}
           <div>
-            <label className="block text-sm text-gray-300 mb-1">
+            <label className="block text-md text-gray-300 mb-1">
               Password
             </label>
             <input
@@ -116,7 +123,7 @@ const Signup = () => {
 
           {/* Confirm Password */}
           <div>
-            <label className="block text-sm text-gray-300 mb-1">
+            <label className="block text-md text-gray-300 mb-1">
               Confirm Password
             </label>
             <input

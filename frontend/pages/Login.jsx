@@ -61,7 +61,7 @@ const Login = () => {
           onSubmit={handleSubmit}
         >
           <div>
-            <label className="block text-sm text-gray-300 mb-1">
+            <label className="block text-md text-gray-300 mb-1">
               Phone Number
             </label>
             <input
@@ -75,7 +75,7 @@ const Login = () => {
 
           {/* Password */}
           <div>
-            <label className="block text-sm text-gray-300 mb-1">
+            <label className="block text-md text-gray-300 mb-1">
               Password
             </label>
             <input

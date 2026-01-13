@@ -44,7 +44,6 @@ def create_user(
 ):
     try:
         hashed_password = encrypt_password(user.password)
-        print("hashed password:", hashed_password)
 
         new_user = {
             "full_name":user.full_name,
@@ -54,7 +53,9 @@ def create_user(
         }
 
         user_created = create_new_user(new_user)
-        if user_created:
+        if user_created['is_present']:
+            return {"message": "present"}
+        elif user_created['is_present'] == False:
             print("User id:", user_created)
             return {"message": "success"}
         else:
