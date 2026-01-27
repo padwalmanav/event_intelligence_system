@@ -1,7 +1,8 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 
 const Navbar = (props) => {
   const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const userId = localStorage.getItem('myEventsIq_user_id');
 
   const handleSearch = (e) => {
     props.searchEvent(e.target.value)
@@ -72,7 +73,11 @@ const Navbar = (props) => {
           </NavLink>
 
           <NavLink
-            to='/events'
+            to={
+              isLoggedIn == 'true' ?
+                `/${userId}/events` :
+                '/1/events'
+            }
             className={({ isActive }) =>
               `text-lg font-medium transition-all duration-200 ${isActive
                 ? "text-blue-400 border-b-2 border-blue-400 pb-1"
@@ -88,7 +93,7 @@ const Navbar = (props) => {
               <NavLink
                 to="/"
                 className="text-lg font-medium transition-all duration-200 text-gray-300 hover:text-blue-400"
-                onClick={()=>localStorage.setItem('isLoggedIn','false')}
+                onClick={()=>{localStorage.setItem('isLoggedIn','false'); localStorage.removeItem('myEventsIq_user_id')}}
               >
                 logout
               </NavLink>

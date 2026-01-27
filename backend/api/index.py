@@ -1,9 +1,19 @@
+import os
+from datetime import datetime, timedelta
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+load_dotenv()
 
-from db.mongo import get_documents, get_document_by_id, create_new_user, check_user_isPresent
-from schema.schemas import create_user_schema, login_user_schema
+from db.mongo import get_documents, get_document_by_id, create_new_user, check_user_isPresent, get_users_count
+from schema.schemas import create_user_schema, login_user_schema, UserRegistrationEmailRequest, send_otp_schema, verify_email_otp_schema
 from utils.bcrypt_password import encrypt_password
+from utils.email_otp_verification.send_otp import send_email_otp
+from utils.email_otp_verification.generate_otp import generate_email_otp
+from utils.email_smtp.registration_email import send_registration_email
+from constants import messages
+
+otp_store = {}
 
 app = FastAPI()
 
@@ -56,7 +66,6 @@ def create_user(
         if user_created['is_present']:
             return {"message": "present"}
         elif user_created['is_present'] == False:
-            print("User id:", user_created)
             return {"message": "success"}
         else:
             return {"message": "fail"}
@@ -70,15 +79,69 @@ def check_user(
 ):
     try:
         user = check_user_isPresent({
-            'phone_no': user.phone_no,
+            'email': user.email,
             'password': user.password
         })
 
         if user['is_present'] == True and user['password_match'] == True:
-            return {'message':'success'}
+            return {
+                'message':'success',
+                'user_id':user['user_id']
+            }
         elif user['is_present'] == True and user['password_match'] == False:
             return {'message':'password'}
         else:
             return {'message':'fail'}
     except Exception as e:
         print(f"Error at login api: {str(e)}")
+
+@app.post('/send-otp')
+def send_email_otp_to_user(payload: send_otp_schema):
+    try:
+        generated_otp = generate_email_otp()
+
+        otp_store[payload.receiver_email] = {
+            "otp": generated_otp,
+            "expiry": datetime.utcnow() + timedelta(minutes=5)
+        }
+
+        send_email_otp(payload.receiver_email, generated_otp)
+
+        return {"message": "success"}
+
+    except Exception as e:
+        print(f"Something went wrong: {str(e)}")
+        return {"message": "fail"}
+
+@app.post('/verify-email-otp')
+def verify_email_otp(payload: verify_email_otp_schema):
+    data = otp_store.get(payload.email)
+
+    if not data:
+        return {"message": "otp not found"}
+
+    if datetime.utcnow() > data["expiry"]:
+        otp_store.pop(payload.email, None)
+        return {"message": "expired"}
+
+    if data["otp"] == payload.email_otp:
+        otp_store.pop(payload.email, None) 
+        return {"message": "success"}
+
+    return {"message": "invalid"}
+
+@app.post('/user-registration-email')
+def send_email_on_new_user_registration(
+    payload: UserRegistrationEmailRequest
+):
+    try:
+        users_count = get_users_count()
+        name_list = payload.full_name.strip().split(" ")
+        first_name = name_list[0]
+
+        send_registration_email(receiver_email=payload.email, body=messages.send_confirmation_body_to_user(first_name), subject=messages.send_subject_to_user)
+        send_registration_email(receiver_email=os.getenv("RECEIVER_EMAIL"), body=messages.send_confirmation_body_to_admin(user_count=users_count), subject=messages.send_subject_to_admin)
+            
+        return {"message":"Email Sent successfully"}
+    except Exception as e:
+        print(f"Failed to send confirmation email on new user signup, {str(e)}")

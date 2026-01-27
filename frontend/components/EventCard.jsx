@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MapPin, Users, Briefcase } from "lucide-react";
 
 const parseDateString = (dateStr) => {
@@ -22,13 +22,12 @@ const getMonthNum = (monthName) => {
   return months[monthName] ?? -1;
 };
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event, userId }) => {
   const navigate = useNavigate();
   const date = new Date();
   const currentMonth = date.getMonth();
 
   const { month, year, day } = parseDateString(event.date);
-  // 🔒 LOCKED CARD UI
   if (event.isLocked) {
     return (
       <div
@@ -140,13 +139,14 @@ const EventCard = ({ event }) => {
           {event.domains?.[1] && <span className="font-medium">{event.domains[1]}</span>}
           {event.domains?.length > 2 && <span className="font-medium">+{event.domains.length - 2}</span>}
         </div>
-
+        
         <button
-          onClick={() => navigate(`/events/${event._id.$oid || event._id}`)}
-          className="w-full bg-blue-600 hover:bg-blue-700 transition-all py-2 rounded-xl text-sm font-medium shadow-lg"
-        >
-          View Insights →
+              onClick={() => navigate(`/${userId}/events/${event._id.$oid || event._id}`)}
+              className="w-full bg-blue-600 hover:bg-blue-700 transition-all py-2 rounded-xl text-sm font-medium shadow-lg"
+            >
+              View Insights →
         </button>
+
       </div>
     </div>
   );

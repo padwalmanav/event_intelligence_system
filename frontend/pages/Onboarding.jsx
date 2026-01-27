@@ -1,11 +1,11 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer"
 
 const Onboarding = () => {
   const navigate = useNavigate();
-  const isLoggedIn = localStorage.getItem("isLoggedIn")
+  
+  const userId = localStorage.getItem('myEventsIq_user_id')
 
   return (
     <div className="min-h-screen bg-[#0A0F1F] text-gray-200">
@@ -163,7 +163,7 @@ const Onboarding = () => {
               localStorage.getItem('isLoggedIn') == 'true'
                 ?
                 <NavLink
-                  to='/events'
+                  to={`/${userId}/events`}
                   className="
                     px-10 py-4 bg-blue-500 hover:bg-blue-600
                     text-white font-semibold rounded-xl
@@ -174,7 +174,7 @@ const Onboarding = () => {
                 </NavLink>
                 :
                 <NavLink
-                  to='/events'
+                  to='/1/events'
                   className="
                     px-10 py-4 bg-blue-500 hover:bg-blue-600
                     text-white font-semibold rounded-xl

@@ -4,6 +4,7 @@ import axios from "axios";
 import EventSlider from "../components/EventSlider";
 import toast from "react-hot-toast";
 import Footer from "../components/Footer";
+import { useParams } from "react-router-dom";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -12,6 +13,7 @@ const Events = () => {
   const [filteredEvents, setFilteredEvents] = useState([]);
 
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const { userId } = useParams(); 
 
   useEffect(() => {
     let toastId;
@@ -49,7 +51,7 @@ const Events = () => {
 
   // ================= GATED EVENTS =================
   const sourceEvents =
-    filteredEvents.length > 0 ? filteredEvents : events;
+    searchEvent.trim().length > 0 ? filteredEvents : events;
 
   const gatedEvents = (() => {
     if (isLoggedIn) return sourceEvents;
@@ -96,7 +98,7 @@ const Events = () => {
             Fetching events...
           </div>
         ) : gatedEvents.length > 0 ? (
-          <EventSlider events={gatedEvents} />
+          <EventSlider events={gatedEvents} userId={userId}/>
         ) : (
           <div className="bg-[#0f172a] rounded-xl h-80 mt-10 pt-16 flex flex-col items-center">
             <h1 className="text-gray-300 text-3xl font-semibold">

@@ -4,14 +4,14 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 
 const EventDetails = () => {
-  const { id } = useParams();
+  const { userId, eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/events/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/events/${eventId}`);
         setEvent(res.data.event);
       } catch (err) {
         console.error("Error fetching event:", err);
@@ -19,7 +19,7 @@ const EventDetails = () => {
     };
 
     fetchEvent();
-  }, [id]);
+  }, [eventId]);
 
   const tabs = [
     { id: "overview", label: "Overview" },

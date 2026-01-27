@@ -52,7 +52,7 @@ def get_document_by_id(id: str):
 # ---------------- User collection ----------------
 def create_new_user(user: dict):
     try:
-        is_present = db['users'].find_one({'phone_no':user['phone_no']})
+        is_present = db['users'].find_one({'email':user['email']})
         if is_present:
             return {
                 'is_present': True
@@ -69,13 +69,14 @@ def create_new_user(user: dict):
 
 def check_user_isPresent(user: dict):
     try:
-        is_present = db['users'].find_one({'phone_no':user['phone_no']})
+        is_present = db['users'].find_one({'email':user['email']})
         if is_present:
             hashed_password = is_present['password']
             if check_password(user['password'], hashed_password):
                 return {
                     'is_present': True,
-                    'password_match': True
+                    'password_match': True,
+                    'user_id':str(is_present['_id'])
                 }
             else:
                 return {
@@ -90,10 +91,12 @@ def check_user_isPresent(user: dict):
         print(f"Error while checking user in db:{str(e)}")
 
 def get_all_users() -> dict:
+    users = []
     try:
-        users = db['users'].find({})
-        for user in users:
+        users_cursor = db['users'].find({})
+        for user in users_cursor:
             user['_id'] = str(user['_id'])
+            users.append(user)
         
         return {
             "data":users
@@ -101,6 +104,14 @@ def get_all_users() -> dict:
     except Exception as e:
         print(f"failed to get users from db, {str(e)}")
         return {"error":"failed to get users from db"}
+
+def get_users_count():
+    try:
+        count = db['users'].count_documents({})
+        return count
+    except Exception as e:
+        print(f"Failed to get count of users, {str(e)}")
+        return {"error":"failed to get user count from db"}
 
 def get_user_by_id(id: str) -> dict:
     try:

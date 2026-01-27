@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import EventCard from "./EventCard";
 
-const EventSlider = ({ events }) => {
+const EventSlider = ({ events, userId }) => {
   const sliderRef = useRef(null);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(false);
@@ -35,7 +35,7 @@ const EventSlider = ({ events }) => {
         className="flex gap-4 overflow-x-auto scroll-smooth no-scrollbar px-10 py-3"
       >
         {events.map((ev) => (
-          <EventCard key={ev._id?.$oid || ev._id} event={ev} />
+          <EventCard key={ev._id?.$oid || ev._id} event={ev} userId={userId}/>
         ))}
       </div>
 

@@ -8,5 +8,16 @@ class create_user_schema(BaseModel):
     password: str
     
 class login_user_schema(BaseModel):
-    phone_no: str
+    email: str
     password: str 
+
+class UserRegistrationEmailRequest(BaseModel):
+    full_name: str
+    email: str
+
+class send_otp_schema(BaseModel):
+    receiver_email: str
+
+class verify_email_otp_schema(BaseModel):
+    email_otp: str
+    email: str
