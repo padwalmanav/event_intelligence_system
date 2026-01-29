@@ -114,7 +114,7 @@ const Login = () => {
               {/* Forgot Password */}
               <div className="flex justify-end">
                 <NavLink
-                  to=""
+                  to="/reset-password"
                   className="text-sm text-blue-400 hover:underline"
                 >
                   Forgot password?

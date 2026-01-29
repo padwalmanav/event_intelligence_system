@@ -17,7 +17,12 @@ class UserRegistrationEmailRequest(BaseModel):
 
 class send_otp_schema(BaseModel):
     receiver_email: str
+    password_reset: Optional[bool] = False
 
 class verify_email_otp_schema(BaseModel):
     email_otp: str
     email: str
+
+class ResetPasswordRequest(BaseModel):
+    email: str
+    password: str

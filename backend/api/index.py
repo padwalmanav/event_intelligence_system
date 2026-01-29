@@ -5,9 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 load_dotenv()
 
-from db.mongo import get_documents, get_document_by_id, create_new_user, check_user_isPresent, get_users_count
-from schema.schemas import create_user_schema, login_user_schema, UserRegistrationEmailRequest, send_otp_schema, verify_email_otp_schema
-from utils.bcrypt_password import encrypt_password
+from db.mongo import get_documents, get_document_by_id, create_new_user, check_user_isPresent, get_users_count, check_email_present, reset_email_password
+from schema.schemas import create_user_schema, login_user_schema, UserRegistrationEmailRequest, send_otp_schema, verify_email_otp_schema, ResetPasswordRequest
 from utils.email_otp_verification.send_otp import send_email_otp
 from utils.email_otp_verification.generate_otp import generate_email_otp
 from utils.email_smtp.registration_email import send_registration_email
@@ -53,13 +52,11 @@ def create_user(
     user: create_user_schema,
 ):
     try:
-        hashed_password = encrypt_password(user.password)
-
         new_user = {
             "full_name":user.full_name,
             "phone_no":user.phone_no,
             "email":user.email,
-            "password":hashed_password
+            "password":user.password
         }
 
         user_created = create_new_user(new_user)
@@ -98,6 +95,11 @@ def check_user(
 @app.post('/send-otp')
 def send_email_otp_to_user(payload: send_otp_schema):
     try:
+        if payload.password_reset:
+            email = check_email_present(payload.receiver_email)
+            if email['is_present'] == False:
+                return {"message":"email not found"}
+            
         generated_otp = generate_email_otp()
 
         otp_store[payload.receiver_email] = {
@@ -145,3 +147,18 @@ def send_email_on_new_user_registration(
         return {"message":"Email Sent successfully"}
     except Exception as e:
         print(f"Failed to send confirmation email on new user signup, {str(e)}")
+
+@app.post("/reset-password")
+def reset_password(payload: ResetPasswordRequest):
+    result = reset_email_password({
+        "email": payload.email,
+        "password": payload.password
+    })
+
+    if result["status"] == "error":
+        return {"error": result["error"]}
+
+    if result["status"] == "fail":
+        return {"error": "Email not found"}
+
+    return {"message": "Password Reset successful"}

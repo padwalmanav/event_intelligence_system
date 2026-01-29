@@ -6,7 +6,7 @@ from datetime import datetime
 from bson.objectid import ObjectId
 load_dotenv()
 
-from utils.bcrypt_password import check_password
+from utils.bcrypt_password import encrypt_password, check_password
 
 connection = MongoClient(os.getenv("MONGO_URI"))
 
@@ -58,6 +58,7 @@ def create_new_user(user: dict):
                 'is_present': True
             }
         else:
+            user['password'] = encrypt_password(user['password'])
             new_user = db['users'].insert_one(user)
             return {
                 'is_present': False,
@@ -89,6 +90,46 @@ def check_user_isPresent(user: dict):
             }
     except Exception as e:
         print(f"Error while checking user in db:{str(e)}")
+        return {"error":f"error while checking if user is present, {str(e)[0,20]}"}
+
+def check_email_present(email: str) -> dict:
+    try:
+        user = db['users'].find_one({'email':email})
+        if user:
+            return{"is_present":True}
+        else:
+            return {"is_present":False}
+
+    except Exception as e:
+        print(f"Error while checking if email is present:{str(e)}")
+        return {"error":f"failed to check if user is present, {str(e)[0,20]}"}
+
+def reset_email_password(user: dict) -> dict:
+    try:
+        hashed_password = encrypt_password(user['password'])
+
+        result = db['users'].update_one(
+            {"email": user["email"]},
+            {"$set": {"password": hashed_password}}
+        )
+
+        if result.matched_count == 0:
+            return {
+                "status": "fail",
+                "message": "Email not found"
+            }
+
+        return {
+            "status": "success",
+            "message": "Password reset successful"
+        }
+
+    except Exception as e:
+        print(f"Error while reset password: {str(e)}")
+        return {
+            "status": "error",
+            "error": "Failed to reset password"
+        }
 
 def get_all_users() -> dict:
     users = []
@@ -103,7 +144,7 @@ def get_all_users() -> dict:
         }
     except Exception as e:
         print(f"failed to get users from db, {str(e)}")
-        return {"error":"failed to get users from db"}
+        return {"error":f"failed to get users from db,{str(e)[0,20]}"}
 
 def get_users_count():
     try:
@@ -111,7 +152,7 @@ def get_users_count():
         return count
     except Exception as e:
         print(f"Failed to get count of users, {str(e)}")
-        return {"error":"failed to get user count from db"}
+        return {"error":f"failed to get user count from db,{str(e)[0,20]}"}
 
 def get_user_by_id(id: str) -> dict:
     try:
@@ -123,4 +164,4 @@ def get_user_by_id(id: str) -> dict:
         }
     except Exception as e:
         print(f"Failed to get user by id from db, {str(e)}")
-        return {"error":"Failed to get user by id from db"}
+        return {"error":f"Failed to get user by id from db, {str(e)[0,20]}"}

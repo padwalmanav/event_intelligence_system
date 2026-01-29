@@ -9,6 +9,7 @@ import About from '../pages/About'
 import Login from '../pages/Login'
 import ProtectedEventRoute from '../components/ProtectedEventRoute'
 import ContactUs from '../pages/ContactUs'
+import ForgetPassword from '../pages/forgetPassword'
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
     element:<ContactUs/>,
     path:'/contact'
   },
+  {
+    element:<ForgetPassword/>,
+    path:'/reset-password'
+  }
 ])
 
 function App() {
