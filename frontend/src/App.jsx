@@ -9,7 +9,7 @@ import About from '../pages/About'
 import Login from '../pages/Login'
 import ProtectedEventRoute from '../components/ProtectedEventRoute'
 import ContactUs from '../pages/ContactUs'
-import ForgetPassword from '../pages/forgetPassword'
+import ForgetPassword from "../pages/ForgetPassword"
 
 const router = createBrowserRouter([
   {
