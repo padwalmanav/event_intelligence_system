@@ -10,6 +10,9 @@ import Login from '../pages/Login'
 import ProtectedEventRoute from '../components/ProtectedEventRoute'
 import ContactUs from '../pages/ContactUs'
 import ForgetPassword from "../pages/ForgetPassword"
+import { createContext, useState } from 'react'
+
+export const UserContext = createContext(null);
 
 const router = createBrowserRouter([
   {
@@ -56,11 +59,14 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+  const [userName,setUserName] = useState("guest") 
+
   return (
     <>
       <Toaster/>
-      <RouterProvider router={router}>
-      </RouterProvider>
+      <UserContext.Provider value={{userName, setUserName}}>
+        <RouterProvider router={router} />
+      </UserContext.Provider>
     </>
   )
 }

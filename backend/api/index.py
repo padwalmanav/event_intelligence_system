@@ -83,7 +83,8 @@ def check_user(
         if user['is_present'] == True and user['password_match'] == True:
             return {
                 'message':'success',
-                'user_id':user['user_id']
+                'user_id':user['user_id'],
+                'user_first_name':user['user_first_name']
             }
         elif user['is_present'] == True and user['password_match'] == False:
             return {'message':'password'}

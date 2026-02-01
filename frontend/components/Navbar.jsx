@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import { NavLink, useParams } from 'react-router-dom'
+import { UserContext } from "../src/App"
 
 const Navbar = (props) => {
   const isLoggedIn = localStorage.getItem('isLoggedIn');
   const userId = localStorage.getItem('myEventsIq_user_id');
+  const { userName, setUserName } = useContext(UserContext)
 
   const handleSearch = (e) => {
     props.searchEvent(e.target.value)
@@ -20,7 +23,7 @@ const Navbar = (props) => {
         </NavLink>
 
         {/* Links */}
-        <div className="flex gap-8">
+        <div className="flex items-center gap-10">
           {props.search && (
             <div className="relative">
               <input
@@ -41,7 +44,7 @@ const Navbar = (props) => {
                     focus:border-blue-400
                     transition-all duration-300
                   "
-                />
+              />
 
               {/* Search Icon */}
               <svg
@@ -88,23 +91,47 @@ const Navbar = (props) => {
             Events
           </NavLink>
 
-          {
-            isLoggedIn == 'true' ?
+          {/* Greet user */}
+          {/* User Area */}
+          <div className="flex items-center gap-4 border-l border-white/10 pl-6">
+
+            {isLoggedIn === 'true' && (
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-semibold">
+                  {userName?.charAt(0).toUpperCase()}
+                </div>
+
+                <span className="text-sm text-gray-300">
+                  Hi,{" "}
+                  <span className="text-blue-400 font-semibold capitalize">
+                    {userName}
+                  </span>
+                </span>
+              </div>
+            )}
+
+            {isLoggedIn === 'true' ? (
               <NavLink
                 to="/"
-                className="text-lg font-medium transition-all duration-200 text-gray-300 hover:text-blue-400"
-                onClick={()=>{localStorage.setItem('isLoggedIn','false'); localStorage.removeItem('myEventsIq_user_id')}}
+                className="text-sm font-medium text-gray-300 hover:text-blue-400 transition"
+                onClick={() => {
+                  localStorage.setItem('isLoggedIn', 'false');
+                  localStorage.removeItem('myEventsIq_user_id');
+                  setUserName('guest');
+                }}
               >
-                logout
+                Logout
               </NavLink>
-              :
+            ) : (
               <NavLink
                 to="/login"
-                className="text-lg font-medium transition-all duration-200 text-gray-300 hover:text-blue-400"
+                className="text-sm font-medium text-gray-300 hover:text-blue-400 transition"
               >
-                login
+                Login
               </NavLink>
-          }
+            )}
+          </div>
+
         </div>
 
       </div>

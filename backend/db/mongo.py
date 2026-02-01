@@ -60,9 +60,10 @@ def create_new_user(user: dict):
         else:
             user['password'] = encrypt_password(user['password'])
             new_user = db['users'].insert_one(user)
+            
             return {
                 'is_present': False,
-                'user_id': str(new_user.inserted_id)
+                'user_id': str(new_user.inserted_id),
             }
     except Exception as e:
         print(f"failed to insert user {str(e)}")
@@ -74,10 +75,13 @@ def check_user_isPresent(user: dict):
         if is_present:
             hashed_password = is_present['password']
             if check_password(user['password'], hashed_password):
+                user_first_name = is_present['full_name'].split(" ")[0]
+
                 return {
                     'is_present': True,
                     'password_match': True,
-                    'user_id':str(is_present['_id'])
+                    'user_id':str(is_present['_id']),
+                    'user_first_name':user_first_name
                 }
             else:
                 return {
