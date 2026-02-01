@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [fullName, setFullname] = useState("");
+  const [countryCode, setCountryCode] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
   const [email, setEmail] = useState("");
   const [emailOtp, setEmailOtp] = useState("");
@@ -15,6 +16,8 @@ const Signup = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [otpSending, setOtpSending] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
+
+  const fullPhoneNumber = `${countryCode}${phoneNo}`
 
   const navigate = useNavigate();
 
@@ -46,7 +49,7 @@ const Signup = () => {
         `${import.meta.env.VITE_API_BASE_URL}/create-user`,
         {
           full_name: fullName,
-          phone_no: phoneNo,
+          phone_no: fullPhoneNumber,
           email: email,
           password: password,
         }
@@ -197,12 +200,42 @@ const Signup = () => {
                 className="w-full px-4 py-2 rounded-lg bg-white/10 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
-              <input
-                required
-                placeholder="Phone Number"
-                onChange={(e) => setPhoneNo(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg bg-white/10 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <div className="flex gap-2">
+                {/* Country Code Dropdown */}
+                <select
+                  value={countryCode}
+                  onChange={(e) => setCountryCode(e.target.value)}
+                  className="px-3 py-2 rounded-lg 
+                    bg-[#333644] text-white 
+                    border border-white/10 
+                    focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="+91" style={{ backgroundColor: "#1C1F2F", color: "#fff" }}>
+                    🇮🇳 +91
+                  </option>
+                  <option value="+1" style={{ backgroundColor: "#1C1F2F", color: "#fff" }}>
+                    🇺🇸 +1
+                  </option>
+                  <option value="+44" style={{ backgroundColor: "#1C1F2F", color: "#fff" }}>
+                    🇬🇧 +44
+                  </option>
+                  <option value="+61" style={{ backgroundColor: "#1C1F2F", color: "#fff" }}>
+                    🇦🇺 +61
+                  </option>
+                  <option value="+971" style={{ backgroundColor: "#1C1F2F", color: "#fff" }}>
+                    🇦🇪 +971
+                  </option>
+                </select>
+
+                {/* Phone Number Input */}
+                <input
+                  required
+                  placeholder="Phone Number"
+                  maxLength={10}
+                  onChange={(e) => setPhoneNo(e.target.value.replace(/\D/g, ""))}
+                  className="flex-1 px-4 py-2 rounded-lg bg-white/10 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
 
               {/* Email + OTP */}
               <div className="space-y-3">
@@ -265,8 +298,8 @@ const Signup = () => {
                 type="submit"
                 disabled={isSubmitting || !otpVerified}
                 className={`w-full py-2 rounded-lg text-white font-semibold transition ${isSubmitting || !otpVerified
-                    ? "bg-blue-400 opacity-70 cursor-not-allowed"
-                    : "bg-blue-500 hover:bg-blue-600"
+                  ? "bg-blue-400 opacity-70 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600"
                   }`}
               >
                 {isSubmitting ? "Creating Account..." : "Create Account"}
