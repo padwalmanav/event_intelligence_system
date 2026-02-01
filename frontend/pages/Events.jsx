@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
-import EventSlider from "../components/EventSlider";
+import EventGrid from "../components/EventGrid";
 import toast from "react-hot-toast";
 import Footer from "../components/Footer";
 import { useParams } from "react-router-dom";
@@ -13,7 +13,7 @@ const Events = () => {
   const [filteredEvents, setFilteredEvents] = useState([]);
 
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  const { userId } = useParams(); 
+  const { userId } = useParams();
 
   useEffect(() => {
     let toastId;
@@ -98,7 +98,19 @@ const Events = () => {
             Fetching events...
           </div>
         ) : gatedEvents.length > 0 ? (
-          <EventSlider events={gatedEvents} userId={userId}/>
+          // <EventSlider events={gatedEvents} userId={userId}/>
+          <>
+            <div className="mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+                <span className="text-gray-200">Tech Mega </span>
+                <span className="text-blue-400">Events 2026</span>
+              </h2>
+
+              <div className="mt-3 h-1 w-24 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"></div>
+            </div>
+
+            <EventGrid events={gatedEvents} userId={userId} />
+          </>
         ) : (
           <div className="bg-[#0f172a] rounded-xl h-80 mt-10 pt-16 flex flex-col items-center">
             <h1 className="text-gray-300 text-3xl font-semibold">
