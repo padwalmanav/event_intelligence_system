@@ -11,6 +11,7 @@ import ProtectedEventRoute from '../components/ProtectedEventRoute'
 import ContactUs from '../pages/ContactUs'
 import ForgetPassword from "../pages/ForgetPassword"
 import { createContext, useState } from 'react'
+import ProtectedLoginRoute from "../components/ProtectedLoginRoute"
 
 export const UserContext = createContext(null);
 
@@ -28,20 +29,25 @@ const router = createBrowserRouter([
       },
       {
         path:'events/:eventId',
-        element:(
-          <ProtectedEventRoute>
-            <EventDetails/>
-          </ProtectedEventRoute>
-        )
+        element:
+        <ProtectedEventRoute>
+          <EventDetails/>
+        </ProtectedEventRoute>
       }
     ]
   },
   {
-    element:<Signup/>,
+    element:
+    <ProtectedLoginRoute>
+      <Signup/>
+    </ProtectedLoginRoute>,
     path:'/signup'
   },
   {
-    element:<Login/>,
+    element:
+    <ProtectedLoginRoute>
+      <Login/>
+    </ProtectedLoginRoute>,
     path:'/login'
   },
   {
