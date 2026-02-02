@@ -1,142 +1,118 @@
-import { useContext } from 'react';
-import { NavLink, useParams } from 'react-router-dom'
-import { UserContext } from "../src/App"
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { UserContext } from "../src/App";
 
 const Navbar = (props) => {
-  const isLoggedIn = localStorage.getItem('isLoggedIn');
-  const userId = localStorage.getItem('myEventsIq_user_id');
-  const { userName, setUserName } = useContext(UserContext)
-
-  const handleSearch = (e) => {
-    props.searchEvent(e.target.value)
-  }
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const userId = localStorage.getItem("myEventsIq_user_id");
+  const { userName, setUserName } = useContext(UserContext);
 
   return (
-    <nav className="backdrop-blur-md bg-[#0b1120]/80 border-b border-white/5 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 bg-gradient-to-b from-black to-black/80 backdrop-blur-md border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-6 h-22 flex items-center justify-between">
 
-        {/* Brand */}
-        <NavLink to="/">
-          <h1 className='text-3xl text-white text-3xl'>
-            <span className='text-xl text-white'>my</span>Events<span className="text-xl font-bold tracking-tight text-blue-400">IQ</span>
-          </h1>
+        {/* LEFT — Logo */}
+        <NavLink to="https://www.myeventsiq.com" className="flex items-center gap-2">
+          <img
+            src="https://myeventsiq.com/wp-content/uploads/2025/11/Group-8.png"
+            alt="myEventsIQ"
+            className="h-full max-h-17 w-auto object-contain"
+          />
+
         </NavLink>
 
-        {/* Links */}
-        <div className="flex items-center gap-10">
-          {props.search && (
-            <div className="relative">
-              <input
-                type="search"
-                placeholder="Search events..."
-                onChange={handleSearch}
-                className="
-                    w-64
-                    pl-10 pr-4 py-2
-                    rounded-full
-                    bg-white/10
-                    text-white
-                    placeholder-gray-400
-                    border border-white/10
-                    backdrop-blur-md
-                    focus:outline-none
-                    focus:ring-2 focus:ring-blue-400/60
-                    focus:border-blue-400
-                    transition-all duration-300
-                  "
-              />
-
-              {/* Search Icon */}
-              <svg
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
+        {/* CENTER — Nav Links */}
+        <div className="hidden md:flex items-center gap-8 text-md text-gray-400">
+          {["Features", "Industries", "Pricing", "Blog", "Contact", "Events"].map(
+            (item) => (
+              <NavLink
+                key={item}
+                to={`/${userId ?? "1"}/${item.toLowerCase()}`}
+                className={({ isActive }) =>
+                  `transition ${isActive ? "text-blue-400" : "hover:text-white"}`
+                }
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
-                />
-              </svg>
+                {item}
+              </NavLink>
+            )
+          )}
+
+        </div>
+
+        {/* RIGHT — Auth + CTA */}
+        <div className="flex items-center gap-4">
+
+          {/* Greeting */}
+          {isLoggedIn === "true" && (
+            <div className="hidden lg:flex items-center gap-2 text-sm text-gray-300">
+              <div className="w-7 h-7 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-semibold">
+                {userName?.charAt(0).toUpperCase()}
+              </div>
+              <span>
+                Hi,{" "}
+                <span className="text-blue-400 font-medium capitalize">
+                  {userName}
+                </span>
+              </span>
             </div>
           )}
 
+          {/* Free Report Button */}
           <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `text-lg font-medium transition-all duration-200 ${isActive
-                ? "text-blue-400 border-b-2 border-blue-400 pb-1"
-                : "text-gray-300 hover:text-blue-400"
-              }`
-            }
+            to="/free-report"
+            className="
+              hidden sm:inline-flex items-center justify-center
+              px-4 py-2
+              rounded-lg
+              text-sm font-semibold text-white
+              bg-gradient-to-r from-blue-500 to-cyan-400
+              shadow-[0_0_22px_rgba(56,189,248,0.75)]
+              transform transition-all duration-300 ease-out
+              hover:-translate-y-1.5
+              hover:shadow-[0_0_34px_rgba(56,189,248,0.95)]
+            "
           >
-            Home
+            FREE Intelligence Report
           </NavLink>
 
+
+
+          {/* Auth Button */}
+          {isLoggedIn === "true" ? (
+            <NavLink
+              to={'/1/events'}
+              onClick={() => {
+                localStorage.removeItem('myEventsIq_username')
+                localStorage.setItem("isLoggedIn", "false");
+                localStorage.removeItem("myEventsIq_user_id");
+                setUserName(null);
+              }}
+              className="px-4 py-2 text-sm text-gray-300 hover:text-white transition rounded-lg hover:bg-blue-500"
+            >
+              Logout
+            </NavLink>
+          ) : (
+            <NavLink
+              to="/login"
+              className="px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-blue-500 transition rounded-lg"
+            >
+              Sign In
+            </NavLink>
+          )}
+
+          {/* Start Free */}
           <NavLink
-            to={
-              isLoggedIn == 'true' ?
-                `/${userId}/events` :
-                '/1/events'
-            }
-            className={({ isActive }) =>
-              `text-lg font-medium transition-all duration-200 ${isActive
-                ? "text-blue-400 border-b-2 border-blue-400 pb-1"
-                : "text-gray-300 hover:text-blue-400"
-              }`
-            }
+            to="/signup"
+            className="px-4 py-2 rounded-lg text-sm font-semibold
+              bg-blue-500 text-white hover:bg-blue-500 transition"
           >
-            Events
+            Start Free
           </NavLink>
-
-          {/* Greet user */}
-          {/* User Area */}
-          <div className="flex items-center gap-4 border-l border-white/10 pl-6">
-
-            {isLoggedIn === 'true' && (
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-semibold">
-                  {userName?.charAt(0).toUpperCase()}
-                </div>
-
-                <span className="text-sm text-gray-300">
-                  Hi,{" "}
-                  <span className="text-blue-400 font-semibold capitalize">
-                    {userName}
-                  </span>
-                </span>
-              </div>
-            )}
-
-            {isLoggedIn === 'true' ? (
-              <NavLink
-                to="/"
-                className="text-sm font-medium text-gray-300 hover:text-blue-400 transition"
-                onClick={() => {
-                  localStorage.setItem('isLoggedIn', 'false');
-                  localStorage.removeItem('myEventsIq_user_id');
-                  setUserName('guest');
-                }}
-              >
-                Logout
-              </NavLink>
-            ) : (
-              <NavLink
-                to="/login"
-                className="text-sm font-medium text-gray-300 hover:text-blue-400 transition"
-              >
-                Login
-              </NavLink>
-            )}
-          </div>
-
         </div>
 
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

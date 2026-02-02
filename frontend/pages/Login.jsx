@@ -27,6 +27,7 @@ const Login = () => {
       setLogging(false)
       if (res.data.message == 'success') {
         setUserName(res.data.user_first_name)
+        localStorage.setItem('myEventsIq_userName', res.data.user_first_name)
         localStorage.setItem('isLoggedIn', 'true')
         localStorage.setItem('myEventsIq_user_id',res.data.user_id)
         toast.success('Login Successfull')

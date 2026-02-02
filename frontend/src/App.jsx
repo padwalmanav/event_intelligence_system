@@ -59,7 +59,9 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  const [userName,setUserName] = useState("guest") 
+  const [userName, setUserName] = useState(() => {
+    return localStorage.getItem("myEventsIq_userName") || "guest";
+  });
 
   return (
     <>

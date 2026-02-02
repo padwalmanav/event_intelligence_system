@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 
 const Footer = () => {
+  const userId = localStorage.getItem('myEventsIq_user_id')
+
   return (
     <footer className="bg-[#0A0F1F] border-t border-white/5 text-gray-300">
       <div className="max-w-screen-2xl mx-auto px-6 py-16">
@@ -36,8 +38,8 @@ const Footer = () => {
           <div className="justify-self-center text-center">
             <h3 className="text-white font-semibold mb-5 text-lg">Quick Links</h3>
             <ul className="space-y-3 text-lg">
-              <li><NavLink to="/" className="hover:text-blue-400">Home</NavLink></li>
-              <li><NavLink to="/events" className="hover:text-blue-400">Events</NavLink></li>
+              <li><NavLink to="http://www.myeventsiq.com" className="hover:text-blue-400">Home</NavLink></li>
+              <li><NavLink to={`/${userId ?? '1'}/events`} className="hover:text-blue-400">Events</NavLink></li>
               <li><NavLink to="" className="hover:text-blue-400">Pricing</NavLink></li>
               <li><NavLink to="" className="hover:text-blue-400">Features</NavLink></li>
             </ul>
