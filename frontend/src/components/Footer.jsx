@@ -40,8 +40,8 @@ const Footer = () => {
             <ul className="space-y-3 text-lg">
               <li><NavLink to="http://www.myeventsiq.com" className="hover:text-blue-400">Home</NavLink></li>
               <li><NavLink to={`/${userId ?? '1'}/events`} className="hover:text-blue-400">Events</NavLink></li>
-              <li><NavLink to="" className="hover:text-blue-400">Pricing</NavLink></li>
-              <li><NavLink to="" className="hover:text-blue-400">Features</NavLink></li>
+              <li><NavLink to="https://myeventsiq.com/#Pricing" className="hover:text-blue-400">Pricing</NavLink></li>
+              <li><NavLink to="https://myeventsiq.com/#Features" className="hover:text-blue-400">Features</NavLink></li>
             </ul>
           </div>
 
@@ -51,7 +51,7 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-5 text-lg">Company</h3>
             <ul className="space-y-3 text-lg">
               <li><NavLink to="/about" className="hover:text-blue-400">About</NavLink></li>
-              <li><NavLink to="" className="hover:text-blue-400">Blog</NavLink></li>
+              <li><NavLink to="https://myeventsiq.com/blog/" className="hover:text-blue-400">Blog</NavLink></li>
               <li><NavLink to="" className="hover:text-blue-400">Careers</NavLink></li>
               <li><NavLink to="" className="hover:text-blue-400">Partners</NavLink></li>
             </ul>

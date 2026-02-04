@@ -25,7 +25,7 @@ const Events = () => {
           `${import.meta.env.VITE_API_BASE_URL}/events`
         );
         setEvents(res.data.events || []);
-        toast.success("Events Loaded", { id: toastId });
+        toast.success("Events Loaded", { id: toastId, duration:2000 });
       } catch (err) {
         toast.error("Failed to load events", { id: toastId });
       } finally {

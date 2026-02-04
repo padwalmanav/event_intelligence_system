@@ -103,7 +103,7 @@ const Navbar = (props) => {
 
           {/* Free Report Button */}
           <NavLink
-            to="/free-report"
+            to="https://myeventsiq.com/free-intelligence-report/"
             className="
               hidden sm:inline-flex items-center justify-center
               px-4 py-2
@@ -144,7 +144,7 @@ const Navbar = (props) => {
 
           {/* Start Free */}
           <NavLink
-            to="/signup"
+            to="https://myeventsiq.com/contact/"
             className="px-4 py-2 rounded-lg text-sm font-semibold
               bg-blue-500 text-white hover:bg-blue-500 transition"
           >
