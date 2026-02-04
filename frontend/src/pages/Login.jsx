@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
-import { UserContext } from "../src/App";
+import { UserContext } from "../App";
 
 const Login = () => {
   const [email, setEmail] = useState(null);

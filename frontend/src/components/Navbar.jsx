@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { UserContext } from "../src/App";
+import { UserContext } from "../App";
 
 const Navbar = (props) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -21,9 +21,53 @@ const Navbar = (props) => {
 
         </NavLink>
 
-        {/* CENTER — Nav Links */}
         <div className="hidden md:flex items-center gap-8 text-md text-gray-400">
-          {["Features", "Industries", "Pricing", "Blog", "Contact", "Events"].map(
+
+          <NavLink
+            to='https://myeventsiq.com/#Features'
+            className={"hover:text-white"}
+          >
+            Features
+          </NavLink>
+
+          <NavLink
+            to='https://myeventsiq.com/#Industries'
+            className={"hover:text-white"}
+          >
+            Industries
+          </NavLink>
+
+          <NavLink
+            to='https://myeventsiq.com/#Pricing'
+            className={"hover:text-white"}
+          >
+            Pricing
+          </NavLink>
+
+          <NavLink
+            to='https://myeventsiq.com/blog/'
+            className={"hover:text-white"}
+          >
+            Blog
+          </NavLink>
+
+          <NavLink
+            to='https://myeventsiq.com/contact/'
+            className={"hover:text-white"}
+          >
+            Contact
+          </NavLink>
+
+          <NavLink
+            to={`/${userId ?? "1"}/events`}
+            className={({ isActive }) =>
+              `transition ${isActive ? "text-blue-400" : "hover:text-white"}`
+            }
+          >
+            Events
+          </NavLink>
+
+          {/* {["Features", "Industries", "Pricing", "Blog", "Contact", "Events"].map(
             (item) => (
               <NavLink
                 key={item}
@@ -35,7 +79,7 @@ const Navbar = (props) => {
                 {item}
               </NavLink>
             )
-          )}
+          )} */}
 
         </div>
 
@@ -74,8 +118,6 @@ const Navbar = (props) => {
           >
             FREE Intelligence Report
           </NavLink>
-
-
 
           {/* Auth Button */}
           {isLoggedIn === "true" ? (
