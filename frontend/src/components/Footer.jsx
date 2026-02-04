@@ -45,7 +45,6 @@ const Footer = () => {
             </ul>
           </div>
 
-
           {/* COMPANY */}
           <div className="justify-self-center text-center">
             <h3 className="text-white font-semibold mb-5 text-lg">Company</h3>
@@ -56,7 +55,6 @@ const Footer = () => {
               <li><NavLink to="" className="hover:text-blue-400">Partners</NavLink></li>
             </ul>
           </div>
-
         </div>
 
         {/* ================= NEWSLETTER ROW ================= */}
