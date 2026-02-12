@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { NavLink, useNavigate } from "react-router-dom";
+import PasswordInput from "../components/PasswordInput";
 
 const Signup = () => {
   const [fullName, setFullname] = useState("");
@@ -286,12 +287,8 @@ const Signup = () => {
                 )}
               </div>
 
-              <input
-                required
-                type="password"
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg bg-white/10 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              <PasswordInput
+                setPassword={setPassword}
               />
 
               <button
