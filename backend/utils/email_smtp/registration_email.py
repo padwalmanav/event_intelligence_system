@@ -24,6 +24,10 @@ def send_registration_email(receiver_email:str, subject: str, body:str):
             msg['From'] = sender_email
             msg['To'] = receiver_email
             
+            msg.set_content("Welcome to MyEventsIQ! Your email client does not support HTML.")
+
+            msg.add_alternative(body, subtype="html")
+            
             server.send_message(msg)
         print(f"Email sent successfully")
 
