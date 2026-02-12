@@ -1,23 +1,49 @@
-send_subject_to_user = "Thanks for signing up for EventSIQ 🚀"
+send_subject_to_user = "Welcome to MyEventsIQ: Driving Growth with Actionable Intelligence"
 send_subject_to_admin = "Congrats You have got a new user!"
 
-def send_confirmation_body_to_user(first_name:str):
-    return f""" 
-        Hi {first_name},
+def send_confirmation_body_to_user(first_name: str):
+    return f"""
+    <p>Dear {first_name},</p>
 
-        Thanks for signing up for myEventsIQ!
+    <p>
+    Welcome to <strong>MyEventsIQ!</strong> Your account is now active, and you’re one step closer to moving 
+    <strong>from scattered data to actionable intelligence.</strong>
+    </p>
 
-        Your account is now active, and you’re ready to start using EventSIQ to gain meaningful insights from your event data.
+    <p>
+    We don’t just track events; we centralize and enrich data so your Sales, Marketing, and Strategy teams know exactly where to engage. 
+    As you explore the platform, keep an eye on our proprietary metrics designed to help you prioritize your resources:
+    </p>
 
-        🔐 Access your dashboard:  
-        https://myeventsiq.com
+    <ul>
+        <li>
+            <strong>Event Intelligence &amp; Density Score:</strong> 
+            Identify which events have the highest concentration of relevant opportunities.
+        </li>
+        <li>
+            <strong>Decision Maker Density Score:</strong> 
+            Stop guessing who is in the room; we pinpoint the concentration of high-level stakeholders.
+        </li>
+        <li>
+            <strong>ROI Indicators &amp; Success Metrics:</strong> 
+            Move beyond "gut feelings" with data-backed predictors of event performance.
+        </li>
+    </ul>
 
-        If you run into any issues or have feedback, we’d love to hear from you — just reply to this email.
+    <p>
+    To help us refine your <strong>Strategic Fit Assessment and Final Recommendation</strong>, 
+    could you please reply with any <strong>particular events or specific geographies</strong> you are currently targeting?
+    </p>
 
-        Best regards,  
-        The myEventsIQ Team  
+    <p>
+    We’re excited to help you replace unreliable spreadsheets with verified intelligence.
+    </p>
 
-        myeventsiq.com
+    <p>
+    Regards,<br>
+    Winit<br>
+    Co-Founder | myEventsIQ
+    </p>
     """
 
 def send_confirmation_body_to_admin(user_count: int):
