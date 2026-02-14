@@ -1,80 +1,33 @@
-import { createBrowserRouter, RouterProvider} from 'react-router-dom'
-import Events from './pages/Events'
-import Onboarding from './pages/Onboarding'
-import { Toaster } from 'react-hot-toast'
-import EventDetails from './pages/EventDetails'
-import "../styles.css"
-import Signup from './pages/Signup'
-import About from './pages/About'
-import Login from './pages/Login'
-import ProtectedEventRoute from './components/ProtectedEventRoute'
-import ContactUs from './pages/ContactUs'
-import ForgetPassword from "./pages/ForgetPassword"
-import { createContext, useState } from 'react'
-import ProtectedLoginRoute from "./components/ProtectedLoginRoute"
-
-export const UserContext = createContext(null);
-
-const router = createBrowserRouter([
-  {
-    element:<Onboarding />,
-    path:'/'
-  },
-  {
-    path:'/:userId',
-    children:[
-      {
-        path:'events',
-        element:<Events/>
-      },
-      {
-        path:'events/:eventId',
-        element:
-        <ProtectedEventRoute>
-          <EventDetails/>
-        </ProtectedEventRoute>
-      }
-    ]
-  },
-  {
-    element:
-    <ProtectedLoginRoute>
-      <Signup/>
-    </ProtectedLoginRoute>,
-    path:'/signup'
-  },
-  {
-    element:
-    <ProtectedLoginRoute>
-      <Login/>
-    </ProtectedLoginRoute>,
-    path:'/login'
-  },
-  {
-    element:<About/>,
-    path:'/about'
-  },
-  {
-    element:<ContactUs/>,
-    path:'/contact'
-  },
-  {
-    element:<ForgetPassword/>,
-    path:'/reset-password'
-  }
-])
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
 function App() {
-  const [userName, setUserName] = useState(() => {
-    return localStorage.getItem("myEventsIq_userName") || "guest";
-  });
+  const [count, setCount] = useState(0)
 
   return (
     <>
-      <Toaster/>
-      <UserContext.Provider value={{userName, setUserName}}>
-        <RouterProvider router={router} />
-      </UserContext.Provider>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
     </>
   )
 }
